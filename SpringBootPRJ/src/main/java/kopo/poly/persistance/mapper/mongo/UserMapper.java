@@ -138,8 +138,11 @@ public class UserMapper extends AbstractMongoDBCommon implements IUserMapper {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
     @Override
     public int saveUserRate(String colNm, Map<String, Object> pMap) throws Exception {
 
@@ -208,6 +211,9 @@ public class UserMapper extends AbstractMongoDBCommon implements IUserMapper {
 
         return rList;
     }
+<<<<<<< HEAD
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
+=======
 >>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 
 }

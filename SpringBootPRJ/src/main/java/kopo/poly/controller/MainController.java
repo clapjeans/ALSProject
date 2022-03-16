@@ -3,6 +3,7 @@ package kopo.poly.controller;
 
 import lombok.extern.slf4j.Slf4j;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.awt.print.Pageable;
 
+=======
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 =======
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -105,8 +111,11 @@ public class MainController {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
     //메인페이지
     @GetMapping(value = "search")
     public String searchList(){
@@ -115,6 +124,9 @@ public class MainController {
         log.info(getClass().getName()+"End SearchList ");
         return"/search/listPg";
     }
+<<<<<<< HEAD
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
+=======
 >>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 
 
@@ -129,7 +141,10 @@ public class MainController {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 =======
 >>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 }
