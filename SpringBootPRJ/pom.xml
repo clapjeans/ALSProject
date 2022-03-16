@@ -68,11 +68,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
+<<<<<<< HEAD
 
     </dependencies>
 
 
 
+=======
+    </dependencies>
+
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
     <build>
         <plugins>
             <plugin>

@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+<<<<<<< HEAD
 import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+=======
+import java.util.List;
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 
 @Slf4j
 @Service("NoticeService")
@@ -75,6 +79,9 @@ public class NoticeService implements INoticeService {
         noticeMapper.deleteNoticeInfo(pDTO);
 
     }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 }

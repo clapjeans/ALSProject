@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<<<<<<< HEAD
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%
     List<Map<String,Object>> rList =( List<Map<String,Object>>)request.getAttribute("userList");
 %>
+=======
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -104,13 +107,17 @@
         <div class="row my-5">
             <div class="col-lg-4 py-3">
                 <div class="card-blog">
+<<<<<<< HEAD
                     <%for(Map<String, Object> pMap :rList){  %>
+=======
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
                     <div class="header">
                         <div class="post-thumb">
                             <img src="../assets/img/trash.jpg" alt="">
                         </div>
                     </div>
                     <div class="body">
+<<<<<<< HEAD
                         <h5 class="post-title"><a href="blog-details.html"><%=pMap.get("DICNM")%></a></h5>
                         <div class="post-date"><%=pMap.get("SORTNM")%></div>
                     </div>
@@ -119,6 +126,14 @@
             </div>
 
 
+=======
+                        <h5 class="post-title"><a href="blog-details.html">Source of Content Inspiration</a></h5>
+                        <div class="post-date">Posted on <a href="#">27 Jan 2020</a></div>
+                    </div>
+                </div>
+            </div>
+
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
             <div class="col-lg-4 py-3">
                 <div class="card-blog">
                     <div class="header">
@@ -142,7 +157,11 @@
                     </div>
                     <div class="body">
                         <h5 class="post-title"><a href="blog-details.html">Source of Content Inspiration</a></h5>
+<<<<<<< HEAD
 
+=======
+                        <div class="post-date">Posted on <a href="#">27 Jan 2020</a></div>
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
                     </div>
                 </div>
             </div>
@@ -156,7 +175,11 @@
                     </div>
                     <div class="body">
                         <h5 class="post-title"><a href="blog-details.html">Source of Content Inspiration</a></h5>
+<<<<<<< HEAD
 
+=======
+                        <div class="post-date">Posted on <a href="#">27 Jan 2020</a></div>
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
                     </div>
                 </div>
             </div>
@@ -170,7 +193,11 @@
                     </div>
                     <div class="body">
                         <h5 class="post-title"><a href="blog-details.html">Source of Content Inspiration</a></h5>
+<<<<<<< HEAD
 
+=======
+                        <div class="post-date">Posted on <a href="#">27 Jan 2020</a></div>
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
                     </div>
                 </div>
             </div>
@@ -184,13 +211,21 @@
                     </div>
                     <div class="body">
                         <h5 class="post-title"><a href="blog-details.html">Source of Content Inspiration</a></h5>
+<<<<<<< HEAD
 
+=======
+                        <div class="post-date">Posted on <a href="#">27 Jan 2020</a></div>
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
                     </div>
                 </div>
             </div>
 
         </div>
+<<<<<<< HEAD
 <!---pagenation-->
+=======
+
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
         <nav aria-label="Page Navigation">
             <ul class="pagination justify-content-center">
                 <li class="page-item disabled">
@@ -206,9 +241,12 @@
                 </li>
             </ul>
         </nav>
+<<<<<<< HEAD
         <!---pagenation-->
 
 
+=======
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 
     </div>
 </div>

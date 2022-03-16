@@ -2,6 +2,7 @@ package kopo.poly.controller;
 
 
 import lombok.extern.slf4j.Slf4j;
+<<<<<<< HEAD
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.awt.print.Pageable;
 
+=======
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 @Slf4j
 @Controller
 public class MainController {
@@ -98,7 +104,18 @@ public class MainController {
         return"/picSearch/picSearch";
     }
 
+<<<<<<< HEAD
 
+=======
+    //메인페이지
+    @GetMapping(value = "search")
+    public String searchList(){
+        log.info(getClass().getName()+"Start SearchList ");
+
+        log.info(getClass().getName()+"End SearchList ");
+        return"/search/listPg";
+    }
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 
 
     //메인페이지
@@ -111,5 +128,8 @@ public class MainController {
     }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 }
