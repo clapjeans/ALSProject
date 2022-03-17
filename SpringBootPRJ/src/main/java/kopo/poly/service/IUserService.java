@@ -20,4 +20,6 @@ public interface IUserService {
     // 유저 정보 삭제
     int deleteUser(Map<String, Object> pMap) throws Exception;
 
+
+
 }

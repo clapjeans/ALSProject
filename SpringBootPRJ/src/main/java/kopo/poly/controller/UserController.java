@@ -181,7 +181,7 @@ public class UserController {
     }
 
     //사용자 로그인
-    @RequestMapping(value = "login")
+    @RequestMapping(value = "/login")
     public String login(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 
         log.info(this.getClass().getName() + ".login start");

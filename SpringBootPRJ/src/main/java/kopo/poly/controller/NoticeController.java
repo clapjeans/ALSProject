@@ -5,13 +5,7 @@ import kopo.poly.service.INoticeService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
-=======
->>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,14 +36,7 @@ public class NoticeController {
     @Resource(name = "NoticeService")
     private INoticeService noticeService;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-
-=======
->>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
-=======
->>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
     /**
      * GetMapping은 GET방식을 통해 접속되는 URL 호출에 대해 실행되는 함수로 설정함을 의미함
      * PostMapping은 POST방식을 통해 접속되는 URL 호출에 대해 실행되는 함수로 설정함을 의미함
@@ -385,17 +372,4 @@ public class NoticeController {
         return "/notice/MsgToList";
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-
-
-
-
-
-=======
->>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
-=======
->>>>>>> aca8c8a62c55bf03fab80311b9e0d446ec850867
 }

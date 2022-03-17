@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%
+    List<Map<String,String>> rList =( List<Map<String,String>>)request.getAttribute("InfoList");
+%>
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -67,11 +73,11 @@
                 <div class="col-md-6">
                     <nav aria-label="Breadcrumb">
                         <ul class="breadcrumb justify-content-center py-0 bg-transparent">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active">About</li>
+                            <li class="breadcrumb-item">Home/Method</li>
+                            <li class="breadcrumb-item active">info</li>
                         </ul>
                     </nav>
-                    <h1 class="text-center">재활용 분리배출</h1>
+                    <h1 class="text-center">재활용 분리배출 사전</h1>
 
                 </div>
             </div>
@@ -84,35 +90,37 @@
 <div class="page-section">
 
     <div class="container">
-
+        <%for(Map<String, String> pMap :rList){  %>
         <div class="box icon">
             <div class="box_wrap">
-                <div class="box_title">휴지</div>
-                일반 재활용품 분리수거 방법 아래와같이 해주시면됩니다.
+
+                <div class="box_title"><%=pMap.get("DICNM")%></div>
+                <%=pMap.get("SORTNM")%>분리수거 방법 아래와같이 해주시면됩니다.
             </div>
         </div>
 
-        <h2 class="title-section" style="margin-top: 50px;">버리는 방법</h2>
+        <h2 class="title-section" style="margin-top: 50px;"><%=pMap.get("DICNM")%></h2>
         <div class="divider"></div>
         <ul class="bu">
-            <li>2021.12.25.부터 단독주택·상가는 매주 목요일 폐비닐·투명페트병만 배출해주세요.</li>
-            <li>공동주택에서는 투명페트병을 유색페트병·플라스틱과 구분해 분리배출해주세요.</li>
+            <li><%=pMap.get("EXP")%></li>
+
         </ul>
 
 
-        <h2 class="title-section" style="margin-top: 50px;">버리는 방법</h2>
+        <h2 class="title-section" style="margin-top: 50px;">배출 방법</h2>
         <div class="divider"></div>
         <ul class="bu">
-            <li>2021.12.25.부터 단독주택·상가는 매주 목요일 폐비닐·투명페트병만 배출해주세요.</li>
-            <li>공동주택에서는 투명페트병을 유색페트병·플라스틱과 구분해 분리배출해주세요.</li>
+            <li><%=pMap.get("METHOD")%></li>
+
         </ul>
 
-        <h2 class="title-section" style="margin-top: 50px;">버리는 방법</h2>
+        <h2 class="title-section" style="margin-top: 50px;"> 주의사항</h2>
         <div class="divider"></div>
+        <li><%=pMap.get("CARE")%></li>
         <ul class="bu">
-            <li>2021.12.25.부터 단독주택·상가는 매주 목요일 폐비닐·투명페트병만 배출해주세요.</li>
-            <li>공동주택에서는 투명페트병을 유색페트병·플라스틱과 구분해 분리배출해주세요.</li>
+
         </ul>
+        <% } %>
     </div>
 
 
