@@ -12,25 +12,29 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         body {
-            background: #3CA55C;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #B5AC49, #3CA55C);  /* Chrome 10-25, Safari 5.1-6 */
+            background: #3CA55C; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #B5AC49, #3CA55C); /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to right, #B5AC49, #3CA55C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
             font-family: 'Varela Round', sans-serif;
             margin-top: 200px;
         }
+
         .form-control {
             box-shadow: none;
             border-color: #ddd;
         }
+
         .form-control:focus {
             border-color: #4aba70;
         }
+
         .login-form {
             width: 600px;
             margin: 0 auto;
             padding: 30px 0;
         }
+
         .login-form form {
             color: #434343;
             border-radius: 1px;
@@ -40,11 +44,13 @@
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
             padding: 30px;
         }
+
         .login-form h4 {
             text-align: center;
             font-size: 22px;
             margin-bottom: 20px;
         }
+
         .login-form .avatar {
             color: #fff;
             margin: 0 auto 30px;
@@ -57,43 +63,54 @@
             padding: 15px;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
         }
+
         .login-form .avatar i {
             font-size: 62px;
         }
+
         .login-form .form-group {
             margin-bottom: 20px;
         }
+
         .login-form .form-control, .login-form .btn {
             min-height: 40px;
             border-radius: 2px;
             transition: all 0.5s;
         }
+
         .login-form .close {
             position: absolute;
             top: 15px;
             right: 15px;
         }
+
         .login-form .btn {
             background: #4aba70;
             border: none;
             line-height: normal;
         }
+
         .login-form .btn:hover, .login-form .btn:focus {
             background: #42ae68;
         }
+
         .login-form .checkbox-inline {
             float: left;
         }
+
         .login-form input[type="checkbox"] {
             margin-top: 2px;
         }
+
         .login-form .forgot-link {
             float: right;
         }
+
         .login-form .small {
             font-size: 18px;
             margin-top: 10px;
         }
+
         .login-form a {
             color: #4aba70;
         }
@@ -111,7 +128,8 @@
         </div>
         <div class="form-group">
             <p>useremail</p>
-            <input type="text" class="form-control" placeholder="Confirm Password" required="required" name="user_email">
+            <input type="text" class="form-control" placeholder="Confirm Password" required="required"
+                   name="user_email">
         </div>
         <div class="form-group">
             <p>Password</p>
@@ -123,6 +141,7 @@
         </div>
 
         <input type="submit" class="btn btn-primary btn-block btn-lg" value="Change Password">
+        <div class="text-center small">Do you want to go back?<a href="/home">home</a></div>
 
     </form>
 

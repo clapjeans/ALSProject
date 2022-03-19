@@ -30,7 +30,7 @@
                 <div class="col-md-6 py-5 wow fadeInLeft">
                     <h1 class="mb-4">Let's Learn how to recycle.</h1>
                     <p class="text-lg text-grey mb-5"></p>
-                    <a href="#" class="btn btn-primary btn-split">Watch Video<div class="fab"><span class="mai-play"></span></div></a>
+                    <div class="btn btn-primary btn-split">여기에 날씨 넣을꺼다 위치 미세먼지다!!</div>
                 </div>
                 <div class="col-md-6 py-5 wow zoomIn">
                     <div class="img-fluid text-center">
@@ -54,7 +54,7 @@
                     <div class="body">
                         <h5 class="text-secondary">키워드검색 재활용분류방법</h5>
                         <p>검색을 통해 손쉽게 분리배출방법을 검색 할 수 있습니다.</p>
-                        <a href="service.html" class="btn btn-primary"> Search </a>
+                        <a href="/search" class="btn btn-primary"> Search </a>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                     <div class="body">
                         <h5 class="text-secondary">사진검색 재활용분류방법</h5>
                         <p>사진검색을통해 분리배출방법을 검색 할 수 있습니다.</p>
-                        <a href="service.html" class="btn btn-primary">Image Search</a>
+                        <a href="/picSearch" class="btn btn-primary">Image Search</a>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                     <div class="body">
                         <h5 class="text-secondary">우리동네 배출방법</h5>
                         <p>동네별로 분리배출 방법을 자세히 확인 할 수 있습니다.</p>
-                        <a href="service.html" class="btn btn-primary">Gu-Search</a>
+                        <a href="mapSearch" class="btn btn-primary">Gu-Search</a>
                     </div>
                 </div>
             </div>

@@ -5,8 +5,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%
-    List<Map<String,Object>> rList =( List<Map<String,Object>>)request.getAttribute("Titlelist");
-    String SORTNM=CmmUtil.nvl((String) session.getAttribute("SORTNM"));
+    List<Map<String, Object>> rList = (List<Map<String, Object>>) request.getAttribute("Titlelist");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -32,10 +31,12 @@
             text-align: center;
             font-weight: bold;
         }
-        ul{
+
+        ul {
             text-align: center;
         }
-        li{
+
+        li {
             list-style: none;
             display: inline-block;
 
@@ -49,7 +50,7 @@
 <div class="back-to-top"></div>
 
 <header>
-  <%@include file="../../views/inc/navbar.jsp"%>
+    <%@include file="../../views/inc/navbar.jsp" %>
 
     <div class="container">
         <div class="page-banner">
@@ -57,7 +58,7 @@
                 <div class="col-md-6">
                     <nav aria-label="Breadcrumb">
                         <ul class="breadcrumb justify-content-center py-0 bg-transparent">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item">Home</li>
                             <li class="breadcrumb-item active">Method</li>
                         </ul>
                     </nav>
@@ -70,7 +71,7 @@
 
 <div class="page-section">
     <ul class="menuCategory" style="margin-bottom: 30px">
-        <h2 ><span>Category</span></h2>
+        <h2><span>Category</span></h2>
         <li><a href="/search?SORTNM=가연성">가연성<span> | </span></a>
         </li>
         <li><a href="/search?SORTNM=대형폐기물">대형폐기물<span> | </span></a>
@@ -84,28 +85,28 @@
     </ul>
     <div class="container">
         <div class="row">
+            <!--검색기능-->
             <div class="col-sm-10">
-                <form action="#" class="form-search-blog">
+                <form action="/search" class="form-search-blog" id="key">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <select id="categories" class="custom-select bg-light">
-                                <option>종류</option>
-                                <option value="travel">내용</option>
-                                <option value="travel">생각나는거있음</option>
-
+                            <select id="categories" class="custom-select bg-light" name="sort">
+                                <option value="SORTNM">구분 값</option>
+                                <option value="DICNM">품명</option>
                             </select>
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter keyword..">
+                        <input type="text" class="form-control" name="keyword" placeholder="Enter keyword..">
                     </div>
                 </form>
             </div>
-            <div class="col-sm-2 text-sm-right">
-                <button class="btn btn-secondary">Filter <span class="mai-filter"></span></button>
+            <div class="col-sm-2 text-sm-left">
+                <button type="submit" form="key" class="btn btn-secondary">검색 <span class="mai-filter"></span></button>
             </div>
         </div>
+        <!--검색기능-->
 
         <div class="row my-5">
-            <%for(Map<String, Object> pMap :rList){  %>
+            <%for (Map<String, Object> pMap : rList) { %>
             <div class="col-lg-4 py-3">
                 <div class="card-blog">
                     <div class="header">
@@ -114,17 +115,21 @@
                         </div>
                     </div>
 
-                        <h5 class="post-title"><a href="/infoPg?DICNM=<%=pMap.get("DICNM")%>">&nbsp&nbsp<%=pMap.get("DICNM")%></a></h5>
-                        <div class="post-date">&nbsp&nbsp&nbsp<%=pMap.get("SORTNM")%></div>
-                        <p></p>
+                    <h5 class="post-title"><a
+                            href="/infoPg?DICNM=<%=pMap.get("DICNM")%>">&nbsp&nbsp<%=pMap.get("DICNM")%>
+                    </a></h5>
+                    <div class="post-date">&nbsp&nbsp&nbsp<%=pMap.get("SORTNM")%>
                     </div>
+                    <p></p>
                 </div>
+            </div>
             <%} %>
         </div>
 
 
-<!---pagenation-->
+        <!---pagenation-->
 
+        <!-- 페이징 처리 -->
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
 
@@ -135,7 +140,7 @@
                     </li>
                 </c:if>
                 <c:if test="${paging.currentPage ne 1}">
-                    <c:url var="before" value="">
+                    <c:url var="before" value="/search?SORTNM=${SORTNM}">
                         <c:param name="currentPage" value="${paging.currentPage - 1}"/>
                     </c:url>
 
@@ -152,8 +157,7 @@
 
                     <c:if test="${page ne paging.currentPage }">
                         <c:url var="pagination" value="/search?SORTNM=${SORTNM}">
-                            <c:param name="currentPage" value="${paging.currentPage + 1}"/>
-
+                            <c:param name="currentPage" value="${page}"/>
                         </c:url>
 
                         <li class="page-item"><a class="page-link" href="${pagination}">${page}</a></li>
@@ -184,7 +188,7 @@
     </div>
 </div>
 
-<%@include file="../../views/inc/footbar.jsp"%>
+<%@include file="../../views/inc/footbar.jsp" %>
 
 
 <script src="./assets/js/jquery-3.5.1.min.js"></script>

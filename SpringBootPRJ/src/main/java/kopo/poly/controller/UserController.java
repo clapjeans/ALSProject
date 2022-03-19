@@ -9,6 +9,7 @@ import kopo.poly.util.EncryptUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,13 +27,12 @@ import java.util.Map;
 public class UserController {
 
     //사용자 서비스 활용
-    @Resource(name="UserService")
+    @Resource(name = "UserService")
     private IUserService userService;
 
     //메일서비스 활용
     @Resource(name = "MailService")
     private IMailService mailService;
-
 
 
     //패스워드 찾기 들어가기
@@ -64,7 +65,7 @@ public class UserController {
 
         log.info(this.getClass().getName() + ".register end!");
 
-        return "/login/register";
+        return "/login/creatUser";
     }
 
     //회원로그아웃하기
@@ -74,20 +75,19 @@ public class UserController {
         log.info(this.getClass().getName() + ".logout start");
 
 
-
         // session 비움
         session.invalidate();
 
         // 결과 메세지 전달하기
         model.addAttribute("msg", "로그아웃 성공");
-        model.addAttribute("url", "/UserWordEdit");
+        model.addAttribute("url", "/home");
 
         log.info(this.getClass().getName() + ".logout end");
 
         return "/redirect";
     }
 
-    
+
     //마이페이지 들어가기
     @RequestMapping(value = "userPage")
     public String userPage(HttpSession session, ModelMap model) throws Exception {
@@ -242,6 +242,7 @@ public class UserController {
 
     }
 
+    //비밀번호변경전 로그인하기
     @RequestMapping(value = "updatePwPage")
     public String updatePwPage(HttpSession session, ModelMap model) throws Exception {
 
@@ -258,10 +259,10 @@ public class UserController {
 
         log.info(this.getClass().getName() + ".updatePwPage end");
 
-        return "/user/updatePwPage";
+        return "/login/changPw";
     }
 
-     // 사용자 패스워드 바꾸기
+    // 사용자 패스워드 바꾸기
     @RequestMapping(value = "updateUserPw")
     public String updateUserPw(HttpServletRequest request, HttpSession session, ModelMap model) throws Exception {
 
@@ -291,7 +292,7 @@ public class UserController {
 
             if (res == 1) {
                 msg = "성공적으로 비밀번호를 변경했습니다. 다시 로그인 해주세요";
-                url = "/loginPage";
+                url = "/home";
             } else {
                 msg = "비밀번호 저장에 실패했습니다.";
                 url = "/updatePwPage";
@@ -314,7 +315,7 @@ public class UserController {
     }
 
     // 새비밀번호 전송
-    @RequestMapping(value = "findPw")
+    @PostMapping(value = "findPw")
     public String findPw(HttpServletRequest request, ModelMap model) throws Exception {
 
         log.info(this.getClass().getName() + ".findPw start!");
@@ -405,16 +406,18 @@ public class UserController {
 
             if (res == 1) {
                 msg = "성공적으로 계정이 삭제 되었습니다.";
-                url = "/loginPage";
+                url = "/home";
+                // session 비움
+                session.invalidate();
             } else {
                 msg = "회원탈퇴에 실패했습니다.";
-                url = "/userPage";
+                url = "/home";
             }
 
         } catch (Exception e) {
             // 유저 정보 삭제 실패 시
             msg = "서버 오류입니다.";
-            url = "/userPage";
+            url = "/home";
             log.info(e.toString());
             e.printStackTrace();
         }
@@ -439,9 +442,9 @@ public class UserController {
         try {
             String user_email = CmmUtil.nvl(request.getParameter("email"));
             String user_name = CmmUtil.nvl(request.getParameter("username"));
-            String user_id ="notinid";
+            String user_id = "notinid";
 
-        ;
+            ;
             log.info("user_name : " + user_name);
 
             rMap = userService.getUserExistForAJAX(EncryptUtil.encAES128CBC(user_email));

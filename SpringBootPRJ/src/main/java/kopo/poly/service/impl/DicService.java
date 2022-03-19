@@ -25,9 +25,9 @@ public class DicService implements IDicService {
 
 
     @Override
-    public List<Map<String, Object>> getList(PageInfo paging, String SORTNM) throws Exception {
+    public List<Map<String, Object>> getList(PageInfo paging, String SORTNM, Map<String, String> pMap) throws Exception {
         log.info(this.getClass().getName() + ".getNoticList start!");
-        List<Map<String,Object>> getTitle = dicMapper.getTitlelist(colNm,paging,SORTNM);
+        List<Map<String,Object>> getTitle = dicMapper.getTitlelist(colNm,paging,SORTNM,pMap);
 
 
         if (getTitle == null) {

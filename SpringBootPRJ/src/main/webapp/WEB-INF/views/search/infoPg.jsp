@@ -4,7 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%
-    List<Map<String,String>> rList =( List<Map<String,String>>)request.getAttribute("InfoList");
+    List<Map<String, String>> rList = (List<Map<String, String>>) request.getAttribute("InfoList");
 %>
 
 <html>
@@ -21,13 +21,14 @@
     <link rel="stylesheet" href="./assets/css/theme.css">
 
     <style>
-        .box{
+        .box {
             position: relative;
             margin: 10px 0;
             padding: 35px;
             border: solid 1px #979fa8;
 
         }
+
         .box .box_title {
             margin-bottom: 22px;
             font-size: 40px;
@@ -48,10 +49,12 @@
             margin: 0 auto 30px;
             background: no-repeat url("../assets/img/trash_icon.png");
         }
+
         .box.icon .box_wrap:before {
             position: static;
             margin: 0 auto 30px;
         }
+
         :after, :before {
             display: none;
             content: '';
@@ -65,7 +68,7 @@
 <div class="back-to-top"></div>
 
 <header>
-   <%@include file="../../views/inc/navbar.jsp"%>
+    <%@include file="../../views/inc/navbar.jsp" %>
 
     <div class="container">
         <div class="page-banner">
@@ -73,7 +76,7 @@
                 <div class="col-md-6">
                     <nav aria-label="Breadcrumb">
                         <ul class="breadcrumb justify-content-center py-0 bg-transparent">
-                            <li class="breadcrumb-item">Home/Method</li>
+                            <li class="breadcrumb-item">Home / Method</li>
                             <li class="breadcrumb-item active">info</li>
                         </ul>
                     </nav>
@@ -86,23 +89,25 @@
 </header>
 
 
-
 <div class="page-section">
 
     <div class="container">
-        <%for(Map<String, String> pMap :rList){  %>
+        <%for (Map<String, String> pMap : rList) { %>
         <div class="box icon">
             <div class="box_wrap">
 
-                <div class="box_title"><%=pMap.get("DICNM")%></div>
+                <div class="box_title"><%=pMap.get("DICNM")%>
+                </div>
                 <%=pMap.get("SORTNM")%>분리수거 방법 아래와같이 해주시면됩니다.
             </div>
         </div>
 
-        <h2 class="title-section" style="margin-top: 50px;"><%=pMap.get("DICNM")%></h2>
+        <h2 class="title-section" style="margin-top: 50px;"><%=pMap.get("DICNM")%>
+        </h2>
         <div class="divider"></div>
         <ul class="bu">
-            <li><%=pMap.get("EXP")%></li>
+            <li><%=pMap.get("EXP")%>
+            </li>
 
         </ul>
 
@@ -110,15 +115,16 @@
         <h2 class="title-section" style="margin-top: 50px;">배출 방법</h2>
         <div class="divider"></div>
         <ul class="bu">
-            <li><%=pMap.get("METHOD")%></li>
+            <li><%=pMap.get("METHOD")%>
+            </li>
 
         </ul>
 
         <h2 class="title-section" style="margin-top: 50px;"> 주의사항</h2>
         <div class="divider"></div>
-        <li><%=pMap.get("CARE")%></li>
         <ul class="bu">
-
+            <li><%=pMap.get("CARE")%>
+            </li>
         </ul>
         <% } %>
     </div>
@@ -127,7 +133,7 @@
 </div> <!-- .container -->
 
 
- <%@include file="../../views/inc/footbar.jsp"%>
+<%@include file="../../views/inc/footbar.jsp" %>
 
 <script src="./assets/js/jquery-3.5.1.min.js"></script>
 

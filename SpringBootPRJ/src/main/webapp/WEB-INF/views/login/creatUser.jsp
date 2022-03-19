@@ -12,25 +12,29 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         body {
-            background: #3CA55C;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #B5AC49, #3CA55C);  /* Chrome 10-25, Safari 5.1-6 */
+            background: #3CA55C; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #B5AC49, #3CA55C); /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to right, #B5AC49, #3CA55C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
             font-family: 'Varela Round', sans-serif;
             margin-top: 200px;
         }
+
         .form-control {
             box-shadow: none;
             border-color: #ddd;
         }
+
         .form-control:focus {
             border-color: #4aba70;
         }
+
         .login-form {
             width: 600px;
             margin: 0 auto;
             padding: 30px 0;
         }
+
         .login-form form {
             color: #434343;
             border-radius: 1px;
@@ -40,11 +44,13 @@
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
             padding: 30px;
         }
+
         .login-form h4 {
             text-align: center;
             font-size: 22px;
             margin-bottom: 20px;
         }
+
         .login-form .avatar {
             color: #fff;
             margin: 0 auto 30px;
@@ -57,48 +63,58 @@
             padding: 15px;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
         }
+
         .login-form .avatar i {
             font-size: 62px;
         }
+
         .login-form .form-group {
             margin-bottom: 20px;
         }
+
         .login-form .form-control, .login-form .btn {
             min-height: 40px;
             border-radius: 2px;
             transition: all 0.5s;
         }
+
         .login-form .close {
             position: absolute;
             top: 15px;
             right: 15px;
         }
+
         .login-form .btn {
             background: #4aba70;
             border: none;
             line-height: normal;
         }
+
         .login-form .btn:hover, .login-form .btn:focus {
             background: #42ae68;
         }
+
         .login-form .checkbox-inline {
             float: left;
         }
+
         .login-form input[type="checkbox"] {
             margin-top: 2px;
         }
+
         .login-form .forgot-link {
             float: right;
         }
+
         .login-form .small {
             font-size: 18px;
             margin-top: 10px;
         }
+
         .login-form a {
             color: #4aba70;
         }
     </style>
-
 
 
     <script>
@@ -126,30 +142,31 @@
                 }
             })
         }
-        //유효성 체크값인데 requried로 간단하게 끝냄
-        function submitAction(){
-            var name =document.getElementsByClassName("name");
-            var pw =document.getElementsByClassName("pw");
-            var pw2 =document.getElementsByClassName("pw2");
-            var email =document.getElementsByClassName("email");
 
-            if(name.value ===""){
+        //유효성 체크값인데 requried로 간단하게 끝냄
+        function submitAction() {
+            var name = document.getElementsByClassName("name");
+            var pw = document.getElementsByClassName("pw");
+            var pw2 = document.getElementsByClassName("pw2");
+            var email = document.getElementsByClassName("email");
+
+            if (name.value === "") {
                 alert("이름을 입력하세요.");
                 return false;
             }
-            if(pw.value ===""){
+            if (pw.value === "") {
                 alert("비밀번호를 입력하세요.");
                 return false;
             }
-            if(pw2.value ===""){
+            if (pw2.value === "") {
                 alert("비밀번호를 재입력하세요.");
                 return false;
             }
-            if(email.value ===""){
+            if (email.value === "") {
                 alert("이메일을 입력하세요.");
                 return false;
             }
-            if(pw.value === pw2.value){
+            if (pw.value === pw2.value) {
                 return false;
             }
 
@@ -159,16 +176,15 @@
 
 
         //비밀번호 유효성체크
-        function check_pw(){
+        function check_pw() {
 
 
-            if(document.getElementById('pw').value==document.getElementById('pw2').value){
-                document.getElementById('check').innerHTML='비밀번호가 일치합니다.'
-                document.getElementById('check').style.color='Black';
-            }
-            else{
-                document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다.';
-                document.getElementById('check').style.color='Black';
+            if (document.getElementById('pw').value == document.getElementById('pw2').value) {
+                document.getElementById('check').innerHTML = '비밀번호가 일치합니다.'
+                document.getElementById('check').style.color = 'Black';
+            } else {
+                document.getElementById('check').innerHTML = '비밀번호가 일치하지 않습니다.';
+                document.getElementById('check').style.color = 'Black';
                 return false; //비밀번호가다르면 회원가입불가하게 막음
             }
         }
@@ -182,25 +198,30 @@
         <h4 class="modal-title">Register</h4>
         <div class="form-group">
             <p>Username</p>
-            <input type="text" class="form-control" placeholder="Enter Username" required="required" name="user_name" id="name" >
+            <input type="text" class="form-control" placeholder="Enter Username" required="required" name="user_name"
+                   id="name">
         </div>
         <div class="form-group">
             <p>Email</p>
-            <input type="text" class="form-control" placeholder="Enter Email" required="required" onkeyup="emailCheckHandler(this)" name="user_email" id="email">
+            <input type="text" class="form-control" placeholder="Enter Email" required="required"
+                   onkeyup="emailCheckHandler(this)" name="user_email" id="email">
         </div>
         <div class="form-group">
             <p>Password</p>
-            <input type="password" class="form-control" placeholder="Enter Password" required="required" name="user_pw" onchange="check_pw()" id="pw">
+            <input type="password" class="form-control" placeholder="Enter Password" required="required" name="user_pw"
+                   onchange="check_pw()" id="pw">
         </div>
         <div class="form-group">
             <p>Confirm Password</p>
-            <input type="password" class="form-control" placeholder="Confirm Password" required="required" onchange="check_pw()"  id="pw2">
+            <input type="password" class="form-control" placeholder="Confirm Password" required="required"
+                   onchange="check_pw()" id="pw2">
             <p id="check"></p>
         </div>
 
         <input type="submit" class="btn btn-primary btn-block btn-lg" value="Sign up">
 
-        <div class="text-center small">Already have an account? <a href="#">Login here</a></div>
+        <div class="text-center small">Already have an account? <a href="/login">Login here</a></div>
+        <div class="text-center small">Do you want to go back?<a href="/home">home</a></div>
     </form>
 
 </div>

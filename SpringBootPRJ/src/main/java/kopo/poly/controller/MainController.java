@@ -9,10 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.awt.print.Pageable;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
@@ -21,90 +25,88 @@ public class MainController {
     //모든페이지를 메핑하는 함수
 
 
-   //메인페이지
+    //메인페이지
     @GetMapping(value = "home")
-    public String Home(){
-        log.info(getClass().getName()+"Start SearchList ");
+    public String Home() {
+        log.info(getClass().getName() + "Start SearchList ");
 
-        log.info(getClass().getName()+"End SearchList ");
-        return"/home";
+        log.info(getClass().getName() + "End SearchList ");
+        return "/home";
     }
 
 
-    @GetMapping(value="loginPage")
-    public String login(){
-        log.info(getClass().getName()+"Start SearchList ");
+    @GetMapping(value = "loginPage")
+    public String login() {
+        log.info(getClass().getName() + "Start SearchList ");
 
-        log.info(getClass().getName()+"End SearchList ");
-        return"/login/login";
+        log.info(getClass().getName() + "End SearchList ");
+        return "/login/login";
     }
 
     //메인페이지
     @GetMapping(value = "changPw")
-    public String changPw(){
-        log.info(getClass().getName()+"Start SearchList ");
+    public String changPw() {
+        log.info(getClass().getName() + "Start SearchList ");
 
-        log.info(getClass().getName()+"End SearchList ");
-        return"/login/changPw";
+        log.info(getClass().getName() + "End SearchList ");
+        return "/login/changPw";
     }
 
     //메인페이지
     @GetMapping(value = "createUser")
-    public String createUser(){
-        log.info(getClass().getName()+"Start SearchList ");
+    public String createUser() {
+        log.info(getClass().getName() + "Start SearchList ");
 
-        log.info(getClass().getName()+"End SearchList ");
-        return"/login/creatUser";
+        log.info(getClass().getName() + "End SearchList ");
+        return "/login/creatUser";
     }
 
     //메인페이지
     @GetMapping(value = "findPw")
-    public String findPW(){
-        log.info(getClass().getName()+"Start SearchList ");
+    public String findPW() {
+        log.info(getClass().getName() + "Start SearchList ");
 
-        log.info(getClass().getName()+"End SearchList ");
-        return"/login/findPw";
+        log.info(getClass().getName() + "End SearchList ");
+        return "/login/findPw";
     }
 
     //메인페이지
     @GetMapping(value = "mapInfo")
-    public String mapInfo(){
-        log.info(getClass().getName()+"Start SearchList ");
+    public String mapInfo() {
+        log.info(getClass().getName() + "Start SearchList ");
 
-        log.info(getClass().getName()+"End SearchList ");
-        return"/map/mapListInfo";
+        log.info(getClass().getName() + "End SearchList ");
+        return "/map/mapListInfo";
     }
 
     //메인페이지
     @GetMapping(value = "mapListInfo")
-    public String mapListInfo(){
-        log.info(getClass().getName()+"Start SearchList ");
+    public String mapListInfo() {
+        log.info(getClass().getName() + "Start SearchList ");
 
-        log.info(getClass().getName()+"End SearchList ");
-        return"/map/mapListInfo";
+        log.info(getClass().getName() + "End SearchList ");
+        return "/map/mapListInfo";
     }
 
     //메인페이지
     @GetMapping(value = "mapSearch")
-    public String mapSearch(){
-        log.info(getClass().getName()+"Start SearchList ");
+    public String mapSearch(HttpSession session) {
+        log.info(getClass().getName() + "Start SearchList ");
 
-        log.info(getClass().getName()+"End SearchList ");
-        return"/map/mapSearch";
+
+        log.info(getClass().getName() + "End SearchList ");
+        return "/map/mapSearch";
     }
 
     //메인페이지
     @GetMapping(value = "picSearch")
-    public String picSearch(){
-        log.info(getClass().getName()+"Start SearchList ");
+    public String picSearch(HttpSession session) {
+        log.info(getClass().getName() + "Start SearchList ");
 
-        log.info(getClass().getName()+"End SearchList ");
-        return"/picSearch/picSearch";
+
+        log.info(getClass().getName() + "End SearchList ");
+        return "/picSearch/picSearch";
     }
-
-
-
-
 
 
 }
