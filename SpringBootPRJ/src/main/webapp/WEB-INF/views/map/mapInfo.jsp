@@ -23,11 +23,12 @@
 
         }
         .box .box_title {
-            margin-bottom: 22px;
-            font-size: 40px;
-            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 25px;
+            font-weight: 500;
             color: #1d1d1d;
             word-break: keep-all;
+            text-align: center;
         }
 
         .box.icon .box_wrap:before {
@@ -58,6 +59,16 @@
         .table td{
             border: #a6a6a6 solid 1px;
         }
+        h3, body{
+            font-size: 17px;
+        }
+        .title-section{
+            font-size: 25px;
+        }
+        p{
+            text-align: center;
+            margin-bottom: 0px;
+        }
 
     </style>
 </head>
@@ -76,7 +87,7 @@
                     <nav aria-label="Breadcrumb">
                         <ul class="breadcrumb justify-content-center py-0 bg-transparent">
                             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active">About</li>
+                            <li class="breadcrumb-item active">location</li>
                         </ul>
                     </nav>
                     <h1 class="text-center">구별 배출방법</h1>
@@ -87,83 +98,130 @@
     </div>
 </header>
 
+<!---페이지 하단-->
 
 
-<div class="page-section">
+    <div class="page-section">
 
-    <div class="container">
+        <div class="container">
 
-        <div class="box icon">
-            <div class="box_wrap">
-                <div class="box_title">서울시 구별 쓰레기 배출요령</div>
-                아래와같이 배출요령에따라 배출해주시면됩니다.
+            <div class="box icon">
+                <div class="box_wrap">
+                    <div class="box_title">서울시 00구 00동 쓰레기 배출요령</div>
+                    <p style="text-align: center;">아래와같이 배출요령에따라 배출해주시면됩니다.</p>
+                </div>
             </div>
-        </div>
 
-        <h2 class="title-section" style="margin-top: 50px;">배출장소</h2>
-        <div class="divider"></div>
-        <ul class="bu">
-            <li>2021.12.25.부터 단독주택·상가는 매주 목요일 폐비닐·투명페트병만 배출해주세요.</li>
-            <li>공동주택에서는 투명페트병을 유색페트병·플라스틱과 구분해 분리배출해주세요.</li>
-        </ul>
+            <h2 class="title-section" style="margin-top: 50px;">배출장소</h2>
+            <div class="divider"></div>
+            <ul>
+                <li><h3 class="">집앞 배출탁드립니다.</h3></li>
+                <li><h3>미수거일은 000으로 유념 부탁드립니다.</h3></li>
+                <li> <h3>문의사항은 관리구역부서 000연락부탁드립니다.</h3></li>
 
-
-        <h2 class="title-section" style="margin-top: 50px;">버리는 방법</h2>
-        <div class="divider"></div>
-        <table class="table responsive">
-            <colgroup>
-                <col style="width:8%">
-                <col style="width:20%">
-
-            </colgroup>
+            </ul>
 
 
-            <tbody class="text_center">
-            <tr>
-                <th scope="row" data-content="업체명">경청산업(주)</th>
-                <td data-content="소재지">국제금융로 78 홍우빌딩 704-B호</td>
+
+            <h2 class="title-section" style="margin-top: 50px;">생활쓰레기</h2>
+            <div class="divider"></div>
+            <table class="table responsive">
+                <colgroup>
+                    <col style="width:8%">
+                    <col style="width:20%">
+
+                </colgroup>
 
 
-            </tr>
-            <tr>
-                <th scope="row" data-content="업체명">(주)동일환경</th>
-                <td data-content="소재지">선유서로31길 2</td>
-
-            </tr>
-            <tr>
-                <th scope="row" data-content="업체명">동진환경(주)</th>
-                <td data-content="소재지">영중로 22 남서울빌딩 519호</td>
-
-            </tr>
-            <tr>
-                <th scope="row" data-content="업체명">(주)우성환경</th>
-                <td data-content="소재지">국제금융로 78 홍우빌딩 1002B호</td>
-
-            </tr>
-            <tr>
-                <th scope="row" data-content="업체명">남서울환경(주)</th>
-                <td data-content="소재지">신길로61길 19 크리스찬하우스301호</td>
-
-            </tr>
-            <tr>
-                <th scope="row" data-content="업체명">삼원환경(주)</th>
-                <td data-content="소재지">경인로96길 4-3 태성빌딩 201호</td>
-
-            </tr>
-
-            </tbody>
-        </table>
-
-        <h2 class="title-section" style="margin-top: 50px;">버리는 방법</h2>
-        <div class="divider"></div>
-        <ul class="bu">
-            <li>2021.12.25.부터 단독주택·상가는 매주 목요일 폐비닐·투명페트병만 배출해주세요.</li>
-            <li>공동주택에서는 투명페트병을 유색페트병·플라스틱과 구분해 분리배출해주세요.</li>
-        </ul>
-    </div>
+                <tbody class="text_center">
+                <tr>
+                    <th scope="row" data-content="업체명">배출방법</th>
+                    <td data-content="소재지">국제금융로 78 홍우빌딩 704-B호</td>
 
 
-</div> <!-- .container -->
+                </tr>
+                <tr>
+                    <th scope="row" data-content="업체명">배출요일</th>
+                    <td data-content="소재지">선유서로31길 2</td>
+
+                </tr>
+                <tr>
+                    <th scope="row" data-content="업체명">배출시간</th>
+                    <td data-content="소재지">000~000</td>
+
+                </tr>
+
+
+                </tbody>
+            </table>
+
+
+            <h2 class="title-section" style="margin-top: 50px;">재활용</h2>
+            <div class="divider"></div>
+            <table class="table responsive">
+                <colgroup>
+                    <col style="width:8%">
+                    <col style="width:20%">
+
+                </colgroup>
+
+
+                <tbody class="text_center">
+                <tr>
+                    <th scope="row" data-content="업체명">배출방법</th>
+                    <td data-content="소재지">국제금융로 78 홍우빌딩 704-B호</td>
+
+
+                </tr>
+                <tr>
+                    <th scope="row" data-content="업체명">배출요일</th>
+                    <td data-content="소재지">선유서로31길 2</td>
+
+                </tr>
+                <tr>
+                    <th scope="row" data-content="업체명">배출시간</th>
+                    <td data-content="소재지">000~000</td>
+
+                </tr>
+
+
+                </tbody>
+            </table>
+
+            <h2 class="title-section" style="margin-top: 50px;">음식물쓰레기</h2>
+            <div class="divider"></div>
+            <table class="table responsive">
+                <colgroup>
+                    <col style="width:8%">
+                    <col style="width:20%">
+
+                </colgroup>
+
+
+                <tbody class="text_center">
+                <tr>
+                    <th scope="row" data-content="업체명">배출방법</th>
+                    <td data-content="소재지">국제금융로 78 홍우빌딩 704-B호</td>
+
+
+                </tr>
+                <tr>
+                    <th scope="row" data-content="업체명">배출요일</th>
+                    <td data-content="소재지">선유서로31길 2</td>
+
+                </tr>
+                <tr>
+                    <th scope="row" data-content="업체명">배출시간</th>
+                    <td data-content="소재지">000~000</td>
+
+                </tr>
+
+
+                </tbody>
+            </table>
+
+        </div> <!-- .container -->
+
 
 
 <%@include file="../../views/inc/footbar.jsp"%>
@@ -175,6 +233,7 @@
 <script src="./assets/vendor/wow/wow.min.js"></script>
 
 <script src="./assets/js/theme.js"></script>
+
 
 </body>
 </html>

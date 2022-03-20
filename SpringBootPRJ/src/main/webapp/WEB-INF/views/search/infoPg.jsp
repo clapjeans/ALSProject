@@ -21,20 +21,20 @@
     <link rel="stylesheet" href="./assets/css/theme.css">
 
     <style>
-        .box {
+        .box{
             position: relative;
             margin: 10px 0;
             padding: 35px;
             border: solid 1px #979fa8;
 
         }
-
         .box .box_title {
-            margin-bottom: 22px;
-            font-size: 40px;
-            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 25px;
+            font-weight: 500;
             color: #1d1d1d;
             word-break: keep-all;
+            text-align: center;
         }
 
         .box.icon .box_wrap:before {
@@ -49,15 +49,31 @@
             margin: 0 auto 30px;
             background: no-repeat url("../assets/img/trash_icon.png");
         }
-
         .box.icon .box_wrap:before {
             position: static;
             margin: 0 auto 30px;
         }
-
         :after, :before {
             display: none;
             content: '';
+        }
+
+        .table tr th{
+            background-color: #E9E5D6;
+            border: #a6a6a6 solid 1px;
+        }
+        .table td{
+            border: #a6a6a6 solid 1px;
+        }
+        h3, body{
+            font-size: 17px;
+        }
+        .title-section{
+            font-size: 25px;
+        }
+        p{
+            text-align: center;
+            margin-bottom: 0px;
         }
 
     </style>
@@ -76,7 +92,7 @@
                 <div class="col-md-6">
                     <nav aria-label="Breadcrumb">
                         <ul class="breadcrumb justify-content-center py-0 bg-transparent">
-                            <li class="breadcrumb-item">Home / Method</li>
+                            <li class="breadcrumb-item">Method</li>
                             <li class="breadcrumb-item active">info</li>
                         </ul>
                     </nav>
@@ -96,9 +112,8 @@
         <div class="box icon">
             <div class="box_wrap">
 
-                <div class="box_title"><%=pMap.get("DICNM")%>
-                </div>
-                <%=pMap.get("SORTNM")%>분리수거 방법 아래와같이 해주시면됩니다.
+                <div class="box_title"><%=pMap.get("DICNM")%></div>
+               <p > <%=pMap.get("SORTNM")%>분리수거 방법 아래와같이 해주시면됩니다.</p>
             </div>
         </div>
 
@@ -115,17 +130,18 @@
         <h2 class="title-section" style="margin-top: 50px;">배출 방법</h2>
         <div class="divider"></div>
         <ul class="bu">
-            <li><%=pMap.get("METHOD")%>
-            </li>
-
+            <li><%=pMap.get("METHOD")%></li>
         </ul>
+
 
         <h2 class="title-section" style="margin-top: 50px;"> 주의사항</h2>
         <div class="divider"></div>
+        <% if(pMap.get("CARE")!=""){ %>
         <ul class="bu">
             <li><%=pMap.get("CARE")%>
             </li>
         </ul>
+        <%}%>
         <% } %>
     </div>
 

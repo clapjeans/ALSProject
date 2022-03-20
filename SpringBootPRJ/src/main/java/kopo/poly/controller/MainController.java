@@ -76,7 +76,7 @@ public class MainController {
         log.info(getClass().getName() + "Start SearchList ");
 
         log.info(getClass().getName() + "End SearchList ");
-        return "/map/mapListInfo";
+        return "/map/mapInfo";
     }
 
     //메인페이지
@@ -106,6 +106,16 @@ public class MainController {
 
         log.info(getClass().getName() + "End SearchList ");
         return "/picSearch/picSearch";
+    }
+
+    //메인페이지
+    @GetMapping(value = "mp")
+    public String mp(HttpSession session) {
+        log.info(getClass().getName() + "Start SearchList ");
+
+
+        log.info(getClass().getName() + "End SearchList ");
+        return "/map/mp";
     }
 
 
