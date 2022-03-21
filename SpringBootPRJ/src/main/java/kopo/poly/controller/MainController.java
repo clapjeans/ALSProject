@@ -70,33 +70,7 @@ public class MainController {
         return "/login/findPw";
     }
 
-    //메인페이지
-    @GetMapping(value = "mapInfo")
-    public String mapInfo() {
-        log.info(getClass().getName() + "Start SearchList ");
 
-        log.info(getClass().getName() + "End SearchList ");
-        return "/map/mapInfo";
-    }
-
-    //메인페이지
-    @GetMapping(value = "mapListInfo")
-    public String mapListInfo() {
-        log.info(getClass().getName() + "Start SearchList ");
-
-        log.info(getClass().getName() + "End SearchList ");
-        return "/map/mapListInfo";
-    }
-
-    //메인페이지
-    @GetMapping(value = "mapSearch")
-    public String mapSearch(HttpSession session) {
-        log.info(getClass().getName() + "Start SearchList ");
-
-
-        log.info(getClass().getName() + "End SearchList ");
-        return "/map/mapSearch";
-    }
 
     //메인페이지
     @GetMapping(value = "picSearch")
@@ -106,16 +80,6 @@ public class MainController {
 
         log.info(getClass().getName() + "End SearchList ");
         return "/picSearch/picSearch";
-    }
-
-    //메인페이지
-    @GetMapping(value = "mp")
-    public String mp(HttpSession session) {
-        log.info(getClass().getName() + "Start SearchList ");
-
-
-        log.info(getClass().getName() + "End SearchList ");
-        return "/map/mp";
     }
 
 

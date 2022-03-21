@@ -45,10 +45,10 @@ public class DicMapper extends AbstractMongoDBCommon implements IDicMapper {
 
 
         Document query = new Document();
-        if (SORTNM != "") {
+        if (!SORTNM.equals("")) {
             query.append("SORTNM", SORTNM);
         }
-        if (pMap.get("keyword") != "") {
+        if (!pMap.get("keyword").equals("")) {
             query.append(pMap.get("sort"), new BsonRegularExpression("^.*" + pMap.get("keyword") + ".*$", "i"));
         }
 
@@ -77,10 +77,15 @@ public class DicMapper extends AbstractMongoDBCommon implements IDicMapper {
         return rList;
     }
 
+//    @Override
+//    public int getlistCount(String nm, String colNm) throws Exception {
+//        return 0;
+//    }
+
     //갯수가져오기
-    @Override
-    public int getlistCount(String nm, String colNm) throws Exception {
-        log.info(this.getClass().getName() + ".updateUserPwForFind start");
+//    @Override
+//    public int getlistCount(String nm, String colNm) throws Exception {
+//        log.info(this.getClass().getName() + ".updateUserPwForFind start");
 //
 //        MongoCollection<Document> collection = mongodb.getCollection(colNm);
 //
@@ -113,10 +118,10 @@ public class DicMapper extends AbstractMongoDBCommon implements IDicMapper {
 //       collection.aggregate(pipeline)
 //                .allowDiskUse(true)
 //                .forEach(processBlock);
-        int res = 0;
-        return res;
-//
-    }
+//        int res = 0;
+//        return res;
+////
+//    }
 
     @Override
     public List<Map<String, String>> getTitlelist(String colNm, String dicnm) {

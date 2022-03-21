@@ -53,32 +53,34 @@
 
 <!--검색창-->
 <div class="container" style="margin-bottom: 30px;">
- <h2 class="title-section" style="margin-top: 50px;">지역검색&nbsp;&nbsp;&nbsp;<a  style="font-size: 20px;"href="javascript:void(0);">현재위치 Click me!</a></h2> </h2>
+ <h2 class="title-section" style="margin-top: 50px;">지역검색&nbsp;&nbsp;&nbsp;<a  style="font-size: 20px;"href="javascript:void(0);" onclick="clickme()">현재위치 Click me!</a></h2> </h2>
     <div class="divider1"></div>
     <div class="row">
         <div class="col-sm-10">
-            <form action="#" class="form-search-blog">
+            <form action="/mapListInfo" class="form-search-blog" id="key">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <select id="categories" class="custom-select bg-light" name="category">
-                            <option value="GU">GU</option>
-                            <option value="dong">Dong</option>
-
+                            <option value="GU_NAME">GU</option>
+                            <option value="GU_PLACE">Dong</option>
                         </select>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter keyword..">
+                    <input type="text" class="form-control" placeholder="Enter keyword.." name="keyword">
                 </div>
             </form>
         </div>
         <div class="col-sm-2 text-sm-right">
-            <button class="btn btn-secondary">Filter <span class="mai-filter"></span></button>
+            <button type="submit" class="btn btn-secondary" form="key">Filter <span class="mai-filter"></span></button>
         </div>
     </div>
 
 </div>
 
 <%@include file="../../views/inc/footbar.jsp" %>
+
 <%@include file="maphead.jsp"%>
+
+<%@include file="mapMarker.jsp"%>
 
 <script src="./assets/js/bootstrap.bundle.min.js"></script>
 

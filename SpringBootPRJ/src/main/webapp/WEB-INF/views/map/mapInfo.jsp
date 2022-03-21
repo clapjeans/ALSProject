@@ -1,19 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="kopo.poly.util.CmmUtil" %>
+<%
+    List<Map<String, String>> rList = (List<Map<String, String>>) request.getAttribute("getInfoList");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>SeoGram - SEO Agency Template</title>
-
     <link rel="stylesheet" href="./assets/css/maicons.css">
-
     <link rel="stylesheet" href="./assets/css/bootstrap.css">
-
     <link rel="stylesheet" href="./assets/vendor/animate/animate.css">
-
     <link rel="stylesheet" href="./assets/css/theme.css">
-
     <style>
         .box{
             position: relative;
@@ -78,6 +79,8 @@
 <div class="back-to-top"></div>
 
 <header>
+
+
     <%@include file="../../views/inc/navbar.jsp"%>
 
     <div class="container">
@@ -107,7 +110,9 @@
 
             <div class="box icon">
                 <div class="box_wrap">
-                    <div class="box_title">서울시 00구 00동 쓰레기 배출요령</div>
+                    <%for (Map<String, String> pMap : rList) { %>
+                    <div class="box_title">서울시 <%=CmmUtil.nvl(pMap.get("GU_NAME"))%>&nbsp;<%=CmmUtil.nvl(pMap.get("GU_NUM"))%>쓰레기 배출요령</div>
+                    <p style="text-align: center;">관리구역대상지 <%=pMap.get("GU_PLACE")%></p>
                     <p style="text-align: center;">아래와같이 배출요령에따라 배출해주시면됩니다.</p>
                 </div>
             </div>
@@ -115,9 +120,9 @@
             <h2 class="title-section" style="margin-top: 50px;">배출장소</h2>
             <div class="divider"></div>
             <ul>
-                <li><h3 class="">집앞 배출탁드립니다.</h3></li>
-                <li><h3>미수거일은 000으로 유념 부탁드립니다.</h3></li>
-                <li> <h3>문의사항은 관리구역부서 000연락부탁드립니다.</h3></li>
+                <li><h3 class=""><%=pMap.get("PLACE")%> 배출 부탁드립니다.</h3></li>
+                <li><h3>미수거일은 <%=pMap.get("DAYOFF")%> 입니다.</h3></li>
+                <li> <h3>문의사항은 관리구역부서 <%=pMap.get("PHONM")%>연락부탁드립니다.</h3></li>
 
             </ul>
 
@@ -136,18 +141,18 @@
                 <tbody class="text_center">
                 <tr>
                     <th scope="row" data-content="업체명">배출방법</th>
-                    <td data-content="소재지">국제금융로 78 홍우빌딩 704-B호</td>
+                    <td data-content="소재지"><%=pMap.get("LIFE_WAY")%></td>
 
 
                 </tr>
                 <tr>
                     <th scope="row" data-content="업체명">배출요일</th>
-                    <td data-content="소재지">선유서로31길 2</td>
+                    <td data-content="소재지"><%=pMap.get("LIFE_DY")%></td>
 
                 </tr>
                 <tr>
                     <th scope="row" data-content="업체명">배출시간</th>
-                    <td data-content="소재지">000~000</td>
+                    <td data-content="소재지"><%=pMap.get("LIFE_TM1")%>&nbsp;~&nbsp;<%=pMap.get("LIFE_TM2")%></td>
 
                 </tr>
 
@@ -169,18 +174,18 @@
                 <tbody class="text_center">
                 <tr>
                     <th scope="row" data-content="업체명">배출방법</th>
-                    <td data-content="소재지">국제금융로 78 홍우빌딩 704-B호</td>
+                    <td data-content="소재지"><%=pMap.get("REC_WAY")%></td>
 
 
                 </tr>
                 <tr>
                     <th scope="row" data-content="업체명">배출요일</th>
-                    <td data-content="소재지">선유서로31길 2</td>
+                    <td data-content="소재지"><%=pMap.get("REC_DY")%></td>
 
                 </tr>
                 <tr>
                     <th scope="row" data-content="업체명">배출시간</th>
-                    <td data-content="소재지">000~000</td>
+                    <td data-content="소재지"><%=pMap.get("REC_TM1")%>&nbsp;~&nbsp;<%=pMap.get("REC_TM2")%></td>
 
                 </tr>
 
@@ -201,25 +206,25 @@
                 <tbody class="text_center">
                 <tr>
                     <th scope="row" data-content="업체명">배출방법</th>
-                    <td data-content="소재지">국제금융로 78 홍우빌딩 704-B호</td>
+                    <td data-content="소재지"><%=pMap.get("FOOD_WAY")%></td>
 
 
                 </tr>
                 <tr>
                     <th scope="row" data-content="업체명">배출요일</th>
-                    <td data-content="소재지">선유서로31길 2</td>
+                    <td data-content="소재지"><%=pMap.get("FOOD_DY")%></td>
 
                 </tr>
                 <tr>
                     <th scope="row" data-content="업체명">배출시간</th>
-                    <td data-content="소재지">000~000</td>
+                    <td data-content="소재지"><%=pMap.get("FOOD_TM1")%>&nbsp;~&nbsp;<%=pMap.get("FOOD_TM2")%></td>
 
                 </tr>
 
 
                 </tbody>
             </table>
-
+            <% } %>
         </div> <!-- .container -->
 
 

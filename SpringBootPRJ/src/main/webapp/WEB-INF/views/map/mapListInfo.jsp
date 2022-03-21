@@ -1,5 +1,12 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%
+    List<Map<String, Object>> rList = (List<Map<String, Object>>) request.getAttribute("MapList");
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -112,23 +119,20 @@
 
             <div class="col-sm-10">
 
-                <form action="#" class="form-search-blog">
+                <form action="/mapListInfo" class="form-search-blog" id="key">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <select id="categories" class="custom-select bg-light">
-                                <option>All Categories</option>
-                                <option value="travel">Travel</option>
-                                <option value="lifestyle">LifeStyle</option>
-                                <option value="healthy">Healthy</option>
-                                <option value="food">Food</option>
+                            <select id="categories" class="custom-select bg-light" name="category">
+                                <option value="GU_NAME">GU</option>
+                                <option value="GU_PLACE">Dong</option>
                             </select>
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter keyword..">
+                        <input type="text" class="form-control" placeholder="Enter keyword.." name="keyword">
                     </div>
                 </form>
             </div>
             <div class="col-sm-2 text-sm-right">
-                <button class="btn btn-secondary">Filter <span class="mai-filter"></span></button>
+                <button type="submit" form="key" class="btn btn-secondary">Filter <span class="mai-filter"></span></button>
             </div>
         </div>
 
@@ -142,46 +146,77 @@
                 </tr>
                 </thead>
                 <tbody>
+                <%for (Map<String, Object> pMap : rList) { %>
                 <tr>
-                    <td>강서구</td>
+                    <td><%=pMap.get("GU_NAME")%></td>
                     <th>
-                        <a href="#!">망우본동,망우3동,면목본동,면목2동,면목3,8동,면목4동,면목5동,면목7동,목1동,목2동,상봉1동,상봉2동</a>
+                        <a href="/mapInfo?GU_PLACE=<%=pMap.get("GU_PLACE")%>&GU_NAME=<%=pMap.get("GU_NAME")%>"><%=pMap.get("GU_PLACE")%></a>
                     </th>
-                    <td>2017.07.13</td>
+                    <td><%=pMap.get("DATE")%></td>
                 </tr>
+                <% } %>
 
-                <tr>
-                    <td>양천구</td>
-                    <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                    <td>2017.06.15</td>
-                </tr>
-
-                <tr>
-                    <td>강동구td>
-                    <th><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
-                    <td>2017.06.15</td>
-                </tr>
                 </tbody>
             </table>
         </div>
 
     </div>
 
-    <nav aria-label="Page Navigation">
+    <!-- 페이징 처리 -->
+    <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
+
+            <!-- 이전 -->
+            <c:if test="${paging.currentPage eq 1}">
+                <li class="page-item">
+                    <a class="page-link no-before" tabindex="-1" aria-disabled="true">이전</a>
+                </li>
+            </c:if>
+            <c:if test="${paging.currentPage ne 1}">
+                <c:url var="before" value="/mapListInfo">
+                    <c:param name="currentPage" value="${paging.currentPage - 1}"/>
+                </c:url>
+
+                <li class="page-item">
+                    <a class="page-link" tabindex="-1" href="${before}" aria-disabled="true">이전</a>
+                </li>
+            </c:if>
+
+            <!-- 페이지 -->
+            <c:forEach var="page" begin="${paging.startPage}" end="${paging.endPage}">
+                <c:if test="${page eq paging.currentPage }">
+                    <li class="page-item"><a class="page-link bg-primary text-light">${page}</a></li>
+                </c:if>
+
+                <c:if test="${page ne paging.currentPage }">
+                    <c:url var="pagination" value="/mapListInfo">
+                        <c:param name="currentPage" value="${paging.currentPage + 1}"/>
+                    </c:url>
+
+                    <li class="page-item"><a class="page-link" href="${pagination}">${page}</a></li>
+                </c:if>
+            </c:forEach>
+
+            <!-- 다음 -->
+            <c:if test="${paging.currentPage eq paging.maxPage}">
+                <li class="page-item">
+                    <a class="page-link no-before" tabindex="-1" aria-disabled="true">다음</a>
+                </li>
+            </c:if>
+            <c:if test="${paging.currentPage ne paging.maxPage}">
+                <c:url var="after" value="/mapListInfo">
+                    <c:param name="currentPage" value="${paging.currentPage + 1}"/>
+                </c:url>
+
+                <li class="page-item">
+                    <a class="page-link" tabindex="-1" href="${after}" aria-disabled="true">다음</a>
+                </li>
+            </c:if>
+
         </ul>
     </nav>
+
+    <!---pagenation-->
 
 </div>
 </div>

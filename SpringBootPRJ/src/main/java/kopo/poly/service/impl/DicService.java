@@ -39,15 +39,15 @@ public class DicService implements IDicService {
         return getTitle;
     }
     //데이터 갯수가져오기
-    @Override
-    public int getListCount(String sortnm) throws Exception {
-        log.info(this.getClass().getName()+".updateUserWord Start");
-
-        int listcount = dicMapper.getlistCount(colNm,sortnm);
-
-        log.info(this.getClass().getName()+"updateUserWord End");
-        return listcount;
-    }
+//    @Override
+//    public int getListCount(String sortnm) throws Exception {
+//        log.info(this.getClass().getName()+".updateUserWord Start");
+//
+//        int listcount = dicMapper.getlistCount(colNm,sortnm);
+//
+//        log.info(this.getClass().getName()+"updateUserWord End");
+//        return listcount;
+//    }
 
     @Override
     public List<Map<String, String>> getInfolist(String dicnm) {

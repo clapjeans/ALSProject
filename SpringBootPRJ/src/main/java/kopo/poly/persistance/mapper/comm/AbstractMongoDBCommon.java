@@ -13,7 +13,7 @@ public abstract class AbstractMongoDBCommon {
 
 
     @Autowired
-    private MongoTemplate mongodb;
+    protected MongoTemplate mongodb;
 
     protected boolean createCollection(String colNm) throws Exception {
         return createCollection(colNm, "");

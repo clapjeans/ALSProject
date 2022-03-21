@@ -18,7 +18,7 @@ import java.util.*;
 
 @Controller
 @Slf4j
-public class DicCollection {
+public class DicController {
 
     @Resource(name = "DicService")
     private IDicService dicservice;
@@ -50,7 +50,7 @@ public class DicCollection {
         int listCount = 196;
 
 //        if(SORTNM !=null) {
-//            listCount = dicservice.getListCount(SORTNM,Search);
+//            listCount = dicservice.getListCount(SORTNM,pMap);
 //        }else{
 //            listCount =196;
 //        }
