@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
-<script>
+<script> 
+
+//click 함수가 안됨 아직 
 function clickme() {
 
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
