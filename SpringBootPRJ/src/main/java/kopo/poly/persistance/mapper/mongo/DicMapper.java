@@ -1,5 +1,6 @@
 package kopo.poly.persistance.mapper.mongo;
 
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import kopo.poly.persistance.mapper.IDicMapper;
 import kopo.poly.persistance.mapper.comm.AbstractMongoDBCommon;
@@ -14,7 +15,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 @Component("DicMapper")
@@ -77,54 +77,54 @@ public class DicMapper extends AbstractMongoDBCommon implements IDicMapper {
         return rList;
     }
 
-//    @Override
-//    public int getlistCount(String nm, String colNm) throws Exception {
-//        return 0;
-//    }
+    //페이지 카운트
+    @Override
+    public int getlistCount(String nm, String colNm) throws Exception {
+        log.info(this.getClass().getName() + ".updateUserPwForFind start");
 
-    //갯수가져오기
-//    @Override
-//    public int getlistCount(String nm, String colNm) throws Exception {
-//        log.info(this.getClass().getName() + ".updateUserPwForFind start");
-//
-//        MongoCollection<Document> collection = mongodb.getCollection(colNm);
-//
-//        int res;
-//        Consumer<Document> processBlock = doc -> {
-//             int count = doc.li("COUNT(*)");
-//
-//        };
-//
-//
-//        List<? extends Bson> pipeline = Arrays.asList(
-//                new Document()
-//                        .append("$match", new Document()
-//                                .append("SORTNM", nm)
-//                        ),
-//                new Document()
-//                        .append("$group", new Document()
-//                                .append("_id", new Document())
-//                                .append("COUNT(*)", new Document()
-//                                        .append("$sum", 1)
-//                                )
-//                        ),
-//                new Document()
-//                        .append("$project", new Document()
-//                                .append("COUNT(*)", "$COUNT(*)")
-//                                .append("_id", 0)
-//                        )
-//        );
-//
-//       collection.aggregate(pipeline)
-//                .allowDiskUse(true)
-//                .forEach(processBlock);
-//        int res = 0;
-//        return res;
-////
-//    }
+        int pgCount = 0;
+        //MongoDB 조회 쿼리
+        if (!nm.equals("")) {
+            List<? extends Bson> pipeline = Arrays.asList(
+                    new Document()
+                            .append("$match", new Document()
+                                    .append("SORTNM", nm)
+                            ),
+                    new Document()
+                            .append("$group", new Document()
+                                    .append("_id", new Document())
+                                    .append("COUNT(*)", new Document()
+                                            .append("$sum", 1)
+                                    )
+                            ),
+                    new Document()
+                            .append("$project", new Document()
+                                    .append("pgCount", "$COUNT(*)")
+                                    .append("_id", 0)
+                            )
+
+
+            );
+
+            MongoCollection<Document> col = mongodb.getCollection(colNm);
+            AggregateIterable<Document> rs = col.aggregate(pipeline).allowDiskUse(true);
+
+
+            for (Document doc : rs) {
+                if (doc == null) {
+                    doc = new Document();
+                }
+                pgCount = doc.getInteger("pgCount");
+            }
+
+
+
+        }
+        return pgCount;
+    }
 
     @Override
-    public List<Map<String, String>> getTitlelist(String colNm, String dicnm) {
+    public List<Map<String, String>> getInfolist(String colNm, String dicnm) {
         // 컬렉션으로부터 전체 데이터 가져온 것을 List 형태로 저장하기 위한 변수 선언
         List<Map<String, String>> rList = new ArrayList<>();
 

@@ -49,11 +49,11 @@ public class DicController {
         //게시글 총갯수
         int listCount = 196;
 
-//        if(SORTNM !=null) {
-//            listCount = dicservice.getListCount(SORTNM,pMap);
-//        }else{
-//            listCount =196;
-//        }
+     // if(SORTNM !=null) {
+    //       listCount = dicservice.getListCount(SORTNM);
+    //   }else{
+           listCount =196;
+    //  }
 
         log.info("게시글총갯수확인" + listCount);
 

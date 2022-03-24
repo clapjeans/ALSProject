@@ -91,63 +91,6 @@ public class MapMapper extends AbstractMongoDBCommon implements IMapMapper {
         return rList;
     }
 
-//    @Override //재활용방법 가져오기
-//    public List<Map<String, String>> getMapInfoList(Map<String, String> pMap) {
-//        // 컬렉션으로부터 전체 데이터 가져온 것을 List 형태로 저장하기 위한 변수 선언
-//        List<Map<String, String>> rList = new ArrayList<>();
-//
-//        MongoCollection<Document> collection = mongodb.getCollection(colNm);
-//
-//        Document query = new Document();
-//        query.append("GU_PLACE",pMap.get("GU_PLACE"));
-//        query.append("GU_NAME",pMap.get("GU_NAME"));
-//
-//
-//        Document projection = new Document();
-//        projection.append("GU_NUM", "$GU_NAME");
-//        projection.append("GU_PLACE", "$GU_PLACE");
-//        projection.append("PLACE_TY", "$PLACE_TY");
-//        projection.append("PLACE", "$PLACE");
-//        projection.append("LIFE_WAY", "$LIFE_WAY");
-//        projection.append("FOOD_WAY", "$FOOD_WAY");
-//        projection.append("REC_TY", "$REC_TY");
-//        projection.append("LIFE_DY", "$LIFE_DY");
-//        projection.append("FOOD_DY", "$FOOD_DY");
-//        projection.append("REC_DY", "$REC_DY");
-//        projection.append("LIFE_TM1", "$LIFE_TM1");
-//        projection.append("LIFE_TM2", "$LIFE_TM2");
-//        projection.append("FOOD_TM1", "$FOOD_TM1");
-//        projection.append("FOOD_TM2", "$FOOD_TM2");
-//        projection.append("REC_TM1", "$REC_TM1");
-//        projection.append("REC_TM2", "$REC_TM2");
-//        projection.append("DAYOFF", "$DAYOFF");
-//        projection.append("MANAGE", "$MANAGE");
-//        projection.append("PHONM", "$PHONM");
-//        projection.append("_id", 0);
-//
-//        Consumer<Document> processBlock = document -> {
-//            String GU_NAME = CmmUtil.nvl(document.getString("GU_NAME"));
-//            String GU_PLACE = CmmUtil.nvl(document.getString("GU_PLACE"));
-//            String DATE = CmmUtil.nvl(document.getString("DATE"));
-//
-//            //제대로 출력되는지 확인
-//            log.info(this.getClass().getName() + GU_NAME);
-//            Map<String, String> rMap = new LinkedHashMap<>();
-//
-//            rMap.put("GU_NAME", GU_NAME);
-//            rMap.put("GU_PLACE", GU_PLACE);
-//            rMap.put("DATE", DATE);
-//            rList.add(rMap);
-//
-//        };
-//
-//        log.info(this.getClass().getName() + "mongolist mapper ?");
-//
-//        collection.find(query).projection(projection).forEach(processBlock);
-//
-//
-//        return rList;
-//    }
 @Override //재활용방법 가져오기
 public List<Map<String, String>> getMapInfoList(Map<String, String> pMap) {
     // 컬렉션으로부터 전체 데이터 가져온 것을 List 형태로 저장하기 위한 변수 선언

@@ -14,7 +14,6 @@
 <div id="map" style="width:100%;height:500px;"></div>
 <script>
 
-    function clickme() {
 
         // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
         if (navigator.geolocation) {
@@ -61,7 +60,7 @@
 
             displayMarker(locPosition, message);
         }
-    }
+
 
     // 지도에 마커와 인포윈도우를 표시하는 함수입니다
     function displayMarker(locPosition, message) {

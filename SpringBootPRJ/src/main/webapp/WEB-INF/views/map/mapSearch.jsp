@@ -80,7 +80,7 @@
 
 <%@include file="maphead.jsp"%>
 
-<%@include file="mapMarker.jsp"%>
+
 
 <script src="./assets/js/bootstrap.bundle.min.js"></script>
 
