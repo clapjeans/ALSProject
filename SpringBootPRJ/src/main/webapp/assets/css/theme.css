@@ -1975,7 +1975,7 @@ background: linear-gradient(to right, #45a247, #283c86); /* W3C, IE 10+/ Edge, F
 }
 
 .blog-item .post-title a {
-  color: #8e8aad;
+  color: #52734D;
   transition: all .2s ease;
 }
 
@@ -1987,7 +1987,7 @@ background: linear-gradient(to right, #45a247, #283c86); /* W3C, IE 10+/ Edge, F
 .blog-item .meta a {
   margin-right: 6px;
   font-size: 12px;
-  color: #91C788;
+  color: #52734D;
 }
 
 .blog-item .meta a:hover {

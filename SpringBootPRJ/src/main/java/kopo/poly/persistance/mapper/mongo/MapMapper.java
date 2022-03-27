@@ -52,10 +52,10 @@ public class MapMapper extends AbstractMongoDBCommon implements IMapMapper {
 
         Document query = new Document();
         if (gu != "") {
-            query.append("GU_NAME", gu);
+            query.append("GU_NAME",gu);
         }
         if (dong != "") {
-            query.append("GU_PLACE", dong);
+            query.append("GU_PLACE",new BsonRegularExpression("^.*" + dong+ ".*$", "i"));
         }
         if (!pMap.get("keyword").equals("") ) {
             query.append(pMap.get("category"), new BsonRegularExpression("^.*" + pMap.get("keyword") + ".*$", "i"));

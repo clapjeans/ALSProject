@@ -34,7 +34,7 @@
                     <nav aria-label="Breadcrumb">
                         <ul class="breadcrumb justify-content-center py-0 bg-transparent">
                             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active">/logcation</li>
+                            <li class="breadcrumb-item active">location</li>
                         </ul>
                     </nav>
                     <h1 class="text-center">구별 배출방법 검색</h1>
@@ -79,9 +79,7 @@
 <%@include file="../../views/inc/footbar.jsp" %>
 
 <%@include file="maphead.jsp"%>
-
-
-
+<script type="text/javascript" src="../../../assets/js/click.js"></script>
 <script src="./assets/js/bootstrap.bundle.min.js"></script>
 
 

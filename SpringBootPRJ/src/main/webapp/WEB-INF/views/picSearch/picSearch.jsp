@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="./assets/vendor/animate/animate.css">
 
     <link rel="stylesheet" href="./assets/css/theme.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -21,7 +23,7 @@
 
 <header>
 
-    <%@include file="../../views/inc/navbar.jsp"%>
+    <%@include file="../../views/inc/navbar.jsp" %>
 
     <div class="container">
         <div class="page-banner">
@@ -30,7 +32,7 @@
                     <nav aria-label="Breadcrumb">
                         <ul class="breadcrumb justify-content-center py-0 bg-transparent">
                             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active">About</li>
+                            <li class="breadcrumb-item active">Image</li>
                         </ul>
                     </nav>
                     <h1 class="text-center">이미지 검색</h1>
@@ -42,44 +44,80 @@
 
 <div class="page-section">
     <div class="container">
+        <div style="margin-left: 24px;">
+            <h3>사진검색방법</h3>
+            <h6>1. start 버튼을 먼저 눌러주세요 (처음 한번만 눌러주시면 됩니다)</h6>
+            <h6>2. 검색할 사진을 업로드해주세요</h6>
+            <h6>3. predict버튼을 눌러주세요</h6>
+        </div>
+        <div class="file-upload">
 
-        <div class="img-fluid py-3 text-center">
-            <img src="../assets/img/about_frame.png" alt="">
 
+            <div class="image-upload-wrap">
+                <input class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*">
+                <div class="drag-text">
+                    <h3> 사진을 업로드 해주세요</h3>
+                </div>
+            </div>
+            <div class="file-upload-content">
+                <img class="file-upload-image" id="object" src="#" alt="your image">
+                <div class="image-title-wrap">
+                    <button type="button" onclick="removeUpload()" class="remove-image">Remove <span
+                            class="image-title">Uploaded Image</span></button>
+                </div>
+            </div>
         </div>
         <div style="float: right;">
-            <input type="submit" value="Search" class="btn btn-primary">
+            <input type="button" value="Start" class="btn btn-primary" onclick="init()">
+            <input type="button" value="Predict" class="btn btn-primary" onclick="predict()">
         </div>
-    </div>
-
-    <div class="container" style="margin-top: 30px;">
-        <h2>휴지</h2>
-
-        <h2 class="title-section" style="margin-top: 50px;">버리는방법</h2>
-        <div class="divider"></div>
-
-        <ul class="bu">
-            <li>2021.12.25.부터 단독주택·상가는 매주 목요일 폐비닐·투명페트병만 배출해주세요.</li>
-            <li>공동주택에서는 투명페트병을 유색페트병·플라스틱과 구분해 분리배출해주세요.</li>
-        </ul>
-
-
-
-
-    </div>
-
-
-</div> <!-- .container -->
+        <div class="search">
+            <div id="label-container"></div>
+        </div>
+    </div> <!-- .container -->
 </div> <!-- .page-section -->
 
 
-<%@include file="../../views/inc/footbar.jsp"%>
+<%@include file="../../views/inc/footbar.jsp" %>
 
-<script src="./assets/js/jquery-3.5.1.min.js"></script>
+<!---file upload javascript-->
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('.image-upload-wrap').hide();
+                $('.file-upload-image').attr('src', e.target.result);
+                $('.file-upload-content').show();
+                $('.image-title').html(input.files[0].name);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        } else {
+            removeUpload();
+        }
+    }
+
+    function removeUpload() {
+        $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+        $('.file-upload-content').hide();
+        $('.image-upload-wrap').show();
+    }
+
+    $('.image-upload-wrap').bind('dragover', function () {
+        $('.image-upload-wrap').addClass('image-dropping');
+    });
+    $('.image-upload-wrap').bind('dragleave', function () {
+        $('.image-upload-wrap').removeClass('image-dropping');
+    });
+</script>
+<!-- 티처블 머신 js 가져오는 부분 -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript" src="../assets/js/teach.js"></script>
 
 <script src="./assets/js/bootstrap.bundle.min.js"></script>
-
-<script src="./assets/js/google-maps.js"></script>
 
 <script src="./assets/vendor/wow/wow.min.js"></script>
 

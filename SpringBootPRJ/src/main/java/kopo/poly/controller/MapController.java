@@ -61,6 +61,7 @@ public class MapController {
         String category = CmmUtil.nvl(request.getParameter("category")); //구분값 검색
 
 
+        log.info(this.getClass().getName()+"dong"+dong);
 
         //키워드 검색
         Map<String, String> pMap = new HashMap<>();

@@ -91,7 +91,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <select id="categories" class="custom-select bg-light" name="sort">
-                                <option value="SORTNM">구분</option>
+                                <option value="SORTNM">폐기물 분류</option>
                                 <option value="DICNM">품명</option>
                             </select>
                         </div>
