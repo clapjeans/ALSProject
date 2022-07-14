@@ -3,8 +3,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="kopo.poly.util.CmmUtil" %>
+<%@ page import="kopo.poly.dto.MapDTO" %>
 <%
-    List<Map<String, String>> rList = (List<Map<String, String>>) request.getAttribute("getInfoList");
+    List<MapDTO> rList = (List<MapDTO>) request.getAttribute("getInfoList");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -70,8 +71,55 @@
             text-align: center;
             margin-bottom: 0px;
         }
+        .btn{
+            margin-bottom: 30px;
+
+        }
+
+        /* DivTable.com */
+        .divTable{
+            display: table;
+            width: 100%;
+        }
+        .divTableRow {
+            display: table-row;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+        }
+        .divTableCell, .divTableHead {
+            border: 0.5px solid #a6a6a6;
+            display: table-cell;
+            padding: 15px;
+        }
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+
+        }
+        .divTableFoot {
+            background-color: #EEE;
+            display: table-footer-group;
+            font-weight: bold;
+        }
+        .divTableBody {
+            display: table-row-group;
+        }
+        .divTableHead{
+            background-color: #E9E5D6;
+          font-weight: bold;
+            width: 30%;
+        }
 
     </style>
+    <script>
+        //이전페이지
+        function back() {
+            history.go(-1);
+        }
+
+    </script>
 </head>
 <body>
 
@@ -110,9 +158,9 @@
 
             <div class="box icon">
                 <div class="box_wrap">
-                    <%for (Map<String, String> pMap : rList) { %>
-                    <div class="box_title">서울시 <%=CmmUtil.nvl(pMap.get("GU_NAME"))%>&nbsp;<%=CmmUtil.nvl(pMap.get("GU_NUM"))%>쓰레기 배출요령</div>
-                    <p style="text-align: center;">관리구역대상지 <%=pMap.get("GU_PLACE")%></p>
+                    <%for (MapDTO mDTO: rList) { %>
+                    <div class="box_title">서울시 <%=CmmUtil.nvl(mDTO.getGu_name())%>&nbsp;<%=CmmUtil.nvl(mDTO.getGu_num())%>쓰레기 배출요령</div>
+                    <p style="text-align: center;">관리구역대상지 <%=mDTO.getGu_place()%></p>
                     <p style="text-align: center;">아래와같이 배출요령에따라 배출해주시면됩니다.</p>
                 </div>
             </div>
@@ -120,9 +168,9 @@
             <h2 class="title-section" style="margin-top: 50px;">배출장소</h2>
             <div class="divider"></div>
             <ul>
-                <li><h3 class=""><%=pMap.get("PLACE")%> 배출 부탁드립니다.</h3></li>
-                <li><h3>미수거일은 <%=pMap.get("DAYOFF")%> 입니다.</h3></li>
-                <li> <h3>문의사항은 관리구역부서 <%=pMap.get("PHONM")%>연락부탁드립니다.</h3></li>
+                <li><h3 class=""><%=mDTO.getPlace()%> 배출 부탁드립니다.</h3></li>
+                <li><h3>미수거일은 <%=mDTO.getDayoff()%> 입니다.</h3></li>
+                <li> <h3>문의사항은 관리구역부서 <%=mDTO.getPhone()%>연락부탁드립니다.</h3></li>
 
             </ul>
 
@@ -130,101 +178,64 @@
 
             <h2 class="title-section" style="margin-top: 50px;">생활쓰레기</h2>
             <div class="divider"></div>
-            <table class="table responsive">
-                <colgroup>
-                    <col style="width:8%">
-                    <col style="width:20%">
-
-                </colgroup>
-
-
-                <tbody class="text_center">
-                <tr>
-                    <th scope="row" data-content="업체명">배출방법</th>
-                    <td data-content="소재지"><%=pMap.get("LIFE_WAY")%></td>
-
-
-                </tr>
-                <tr>
-                    <th scope="row" data-content="업체명">배출요일</th>
-                    <td data-content="소재지"><%=pMap.get("LIFE_DY")%></td>
-
-                </tr>
-                <tr>
-                    <th scope="row" data-content="업체명">배출시간</th>
-                    <td data-content="소재지"><%=pMap.get("LIFE_TM1")%>&nbsp;~&nbsp;<%=pMap.get("LIFE_TM2")%></td>
-
-                </tr>
-
-
-                </tbody>
-            </table>
+            <div class="divTable">
+                <div class="divTableBody">
+                    <div class="divTableRow">
+                        <div class="divTableHead">배출방법</div>
+                        <div class="divTableCell"><%=mDTO.getLife_way()%></div>
+                    </div>
+                    <div class="divTableRow">
+                        <div class="divTableHead">배출요일</div>
+                        <div class="divTableCell"><%=mDTO.getLife_dy()%></div>
+                    </div>
+                    <div class="divTableRow">
+                        <div class="divTableHead">배출시간</div>
+                        <div class="divTableCell"><%=mDTO.getLife_tm1()%>&nbsp;~&nbsp;<%=mDTO.getLife_tm2()%></div>
+                    </div>
+                </div>
+            </div>
 
 
             <h2 class="title-section" style="margin-top: 50px;">재활용</h2>
             <div class="divider"></div>
-            <table class="table responsive">
-                <colgroup>
-                    <col style="width:8%">
-                    <col style="width:20%">
-
-                </colgroup>
-
-
-                <tbody class="text_center">
-                <tr>
-                    <th scope="row" data-content="업체명">배출방법</th>
-                    <td data-content="소재지"><%=pMap.get("REC_WAY")%></td>
-
-
-                </tr>
-                <tr>
-                    <th scope="row" data-content="업체명">배출요일</th>
-                    <td data-content="소재지"><%=pMap.get("REC_DY")%></td>
-
-                </tr>
-                <tr>
-                    <th scope="row" data-content="업체명">배출시간</th>
-                    <td data-content="소재지"><%=pMap.get("REC_TM1")%>&nbsp;~&nbsp;<%=pMap.get("REC_TM2")%></td>
-
-                </tr>
-
-
-                </tbody>
-            </table>
+            <div class="divTable">
+                <div class="divTableBody">
+                    <div class="divTableRow">
+                        <div class="divTableHead">배출방법</div>
+                        <div class="divTableCell"><%=mDTO.getRec_way()%></div>
+                    </div>
+                    <div class="divTableRow">
+                        <div class="divTableHead">배출요일</div>
+                        <div class="divTableCell"><%=mDTO.getRec_dy()%></div>
+                    </div>
+                    <div class="divTableRow">
+                        <div class="divTableHead">배출시간</div>
+                        <div class="divTableCell"><%=mDTO.getRec_tm1()%>&nbsp;~&nbsp;<%=mDTO.getRec_tm2()%></div>
+                    </div>
+                </div>
+            </div>
 
             <h2 class="title-section" style="margin-top: 50px;">음식물쓰레기</h2>
             <div class="divider"></div>
-            <table class="table responsive">
-                <colgroup>
-                    <col style="width:8%">
-                    <col style="width:20%">
+            <div class="divTable">
+                <div class="divTableBody">
+                    <div class="divTableRow">
+                        <div class="divTableHead">배출방법</div>
+                        <div class="divTableCell"><%=mDTO.getFood_way()%></div>
+                    </div>
+                    <div class="divTableRow">
+                        <div class="divTableHead">배출요일</div>
+                        <div class="divTableCell"><%=mDTO.getFood_dy()%></div>
+                    </div>
+                    <div class="divTableRow">
+                        <div class="divTableHead">배출시간</div>
+                        <div class="divTableCell"><%=mDTO.getFood_tm1()%>&nbsp;~&nbsp;<%=mDTO.getFood_tm2()%></div>
+                    </div>
+                </div>
+            </div>
 
-                </colgroup>
-
-
-                <tbody class="text_center">
-                <tr>
-                    <th scope="row" data-content="업체명">배출방법</th>
-                    <td data-content="소재지"><%=pMap.get("FOOD_WAY")%></td>
-
-
-                </tr>
-                <tr>
-                    <th scope="row" data-content="업체명">배출요일</th>
-                    <td data-content="소재지"><%=pMap.get("FOOD_DY")%></td>
-
-                </tr>
-                <tr>
-                    <th scope="row" data-content="업체명">배출시간</th>
-                    <td data-content="소재지"><%=pMap.get("FOOD_TM1")%>&nbsp;~&nbsp;<%=pMap.get("FOOD_TM2")%></td>
-
-                </tr>
-
-
-                </tbody>
-            </table>
             <% } %>
+            <button type="submit" class="btn btn-secondary" onclick="back()" style="margin-top: 20px" >이전으로 <span class="mai-filter"></span></button>
         </div> <!-- .container -->
 
 

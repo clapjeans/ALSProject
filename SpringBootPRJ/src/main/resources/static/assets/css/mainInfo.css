@@ -1,0 +1,54 @@
+.box{
+    position: relative;
+    margin: 10px 0;
+    padding: 35px;
+    border: solid 1px #979fa8;
+
+}
+.box .box_title {
+    margin-bottom: 10px;
+    font-size: 25px;
+    font-weight: 500;
+    color: #1d1d1d;
+    word-break: keep-all;
+    text-align: center;
+}
+
+.box.icon .box_wrap:before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+
+    position: static;
+    margin: 0 auto 30px;
+    background: no-repeat url("../assets/img/trash_icon.png");
+}
+.box.icon .box_wrap:before {
+    position: static;
+    margin: 0 auto 30px;
+}
+:after, :before {
+    display: none;
+    content: '';
+}
+
+.table tr th{
+    background-color: #E9E5D6;
+    border: #a6a6a6 solid 1px;
+}
+.table td{
+    border: #a6a6a6 solid 1px;
+}
+h3, body{
+    font-size: 17px;
+}
+.title-section{
+    font-size: 25px;
+}
+p{
+    text-align: center;
+    margin-bottom: 0px;
+}

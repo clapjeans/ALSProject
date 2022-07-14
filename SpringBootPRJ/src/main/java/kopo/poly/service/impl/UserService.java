@@ -1,5 +1,7 @@
 package kopo.poly.service.impl;
 
+import com.amazonaws.services.codecommit.model.UserInfo;
+import kopo.poly.dto.UserInfoDTO;
 import kopo.poly.persistance.mapper.IUserMapper;
 import kopo.poly.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +27,11 @@ public class UserService implements IUserService {
     private IUserMapper userMapper;
 
     @Override
-    public void insertUser(Map<String, Object> pMap) throws Exception {
+    public void insertUser(UserInfoDTO pDTO) throws Exception {
 
         log.info(this.getClass().getName() + ".insertUser start");
 
-        userMapper.insertUser(colNm, pMap);
+        userMapper.insertUser(colNm, pDTO);
 
         log.info(this.getClass().getName() + ".insertUser end");
 
@@ -48,23 +50,25 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Map<String, String> getUser(Map<String, String> pMap) throws Exception {
+    public UserInfoDTO getUser(UserInfoDTO pDTO) throws Exception {
 
         log.info(this.getClass().getName() + ".getUser start");
 
-        Map<String, String> rMap = userMapper.getUser(colNm, pMap);
+        UserInfoDTO rDTO = new UserInfoDTO();
+
+         rDTO = userMapper.getUser(colNm, pDTO);
 
         log.info(this.getClass().getName() + ".getUser end");
 
-        return rMap;
+        return rDTO;
     }
 
     @Override
-    public int updateUserPw(Map<String, Object> pMap) throws Exception {
+    public int updateUserPw(UserInfoDTO pDTO) throws Exception {
 
         log.info(this.getClass().getName() + ".updateUserPw start");
 
-        int res = userMapper.updateUserPw(colNm, pMap);
+        int res = userMapper.updateUserPw(colNm, pDTO);
 
         log.info(this.getClass().getName() + ".updateUserPw end");
 
@@ -72,18 +76,31 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int deleteUser(Map<String, Object> pMap) throws Exception {
+    public int deleteUser(UserInfoDTO pDTO) throws Exception {
 
         log.info(this.getClass().getName() + ".deleteUser start");
 
-        int res = userMapper.deleteUser(colNm, pMap);
+        int res = userMapper.deleteUser(colNm, pDTO);
 
         log.info(this.getClass().getName() + ".deleteUser end");
 
         return res;
     }
 
+    @Override
+    public UserInfoDTO getUserInfo(UserInfoDTO pDTO) {
+        return null;
+    }
 
+    @Override
+    public int UpdateUserPage(UserInfoDTO pDTO) {
+        return 0;
+    }
+
+    @Override
+    public List<UserInfoDTO> getUserList(UserInfoDTO pDTO) {
+        return null;
+    }
 
 
 }

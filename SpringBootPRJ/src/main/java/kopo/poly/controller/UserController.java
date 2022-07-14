@@ -1,7 +1,9 @@
 package kopo.poly.controller;
 
 
+import com.amazonaws.services.codecommit.model.UserInfo;
 import kopo.poly.dto.MailDTO;
+import kopo.poly.dto.UserInfoDTO;
 import kopo.poly.service.IMailService;
 import kopo.poly.service.IUserService;
 import kopo.poly.util.CmmUtil;
@@ -9,10 +11,7 @@ import kopo.poly.util.EncryptUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.annotation.Resource;
@@ -46,6 +45,7 @@ public class UserController {
         return "/login/findPw";
     }
 
+
     //로그인 페이지들어가기
     @RequestMapping(value = "loginPage")
     public String loginPage() throws Exception {
@@ -57,7 +57,7 @@ public class UserController {
         return "/login/login";
     }
 
-    //페이지전환 등록하기
+    //회원등록 ㅠㅔ이지
     @RequestMapping(value = "register")
     public String register() throws Exception {
 
@@ -88,25 +88,6 @@ public class UserController {
     }
 
 
-    //마이페이지 들어가기
-    @RequestMapping(value = "userPage")
-    public String userPage(HttpSession session, ModelMap model) throws Exception {
-
-        log.info(this.getClass().getName() + ".userPage start!");
-
-        String user_email = CmmUtil.nvl((String) session.getAttribute("SS_USER_EMAIL"));
-        log.info("user_email : " + user_email);
-
-        if (user_email.equals("")) {
-            model.addAttribute("msg", "로그인이 필요합니다.");
-            model.addAttribute("url", "/loginPage");
-            return "/redirect";
-        }
-
-        log.info(this.getClass().getName() + ".userPage end!");
-
-        return "/user/userPage";
-    }
 
     //사용자 생성 
     @RequestMapping(value = "insertUser", method = RequestMethod.POST)
@@ -119,22 +100,23 @@ public class UserController {
         try {
 
             // 이메일 AES-128-CBC 암호화
-            String user_email = EncryptUtil.encAES128CBC(CmmUtil.nvl(request.getParameter("user_email")));
-            String user_name = CmmUtil.nvl(request.getParameter("user_name"));
+            String user_email = EncryptUtil.encAES128CBC(CmmUtil.nvl(request.getParameter("user_email"))); //회원이메일
+            String user_name = CmmUtil.nvl(request.getParameter("user_name")); //회원이름
             // 비밀번호 해시 알고리즘 암호화
-            String user_pw = EncryptUtil.encHashSHA256(CmmUtil.nvl(request.getParameter("user_pw")));
+            String user_pw = EncryptUtil.encHashSHA256(CmmUtil.nvl(request.getParameter("user_pw"))); //회원비밀번호
 
             log.info("user_email : " + user_email);
             log.info("user_name : " + user_name);
             log.info("user_pw : " + user_pw);
 
-            Map<String, Object> pMap = new HashMap<>();
-            pMap.put("user_email", user_email);
-            pMap.put("user_name", user_name);
-            pMap.put("user_pw", user_pw);
+            //유저 정보를 담기위함
+            UserInfoDTO pDTO = new UserInfoDTO();
+            pDTO.setUser_email(user_email);
+            pDTO.setUser_name(user_name);
+            pDTO.setUser_pw(user_pw);
 
 
-            userService.insertUser(pMap);
+            userService.insertUser(pDTO);
 
             msg = "회원가입하셨습니다.";
 
@@ -199,19 +181,21 @@ public class UserController {
             log.info("user_email : " + user_email);
             log.info("user_pw : " + user_pw);
 
-            Map<String, String> pMap = new HashMap<>();
-            pMap.put("user_email", user_email);
-            pMap.put("user_pw", user_pw);
+            UserInfoDTO pDTO = new UserInfoDTO();
+            pDTO.setUser_email(user_email);
+            pDTO.setUser_pw(user_pw);
 
-            Map<String, String> rMap = userService.getUser(pMap);
-            log.info("rMap :" + rMap);
 
-            if (rMap.isEmpty()) {
+            UserInfoDTO rDTO = userService.getUser(pDTO);
+            log.info("rDTO :" + rDTO);
+            log.info("user_name"+rDTO.getUser_name());
+
+            if (rDTO.getUser_name()==null) {
                 msg = "아이디와 비밀번호를 다시 확인해주세요";
                 url = "/loginPage";
             } else {
-                String res_user_email = EncryptUtil.decAES128CBC(rMap.get("user_email"));
-                String res_user_name = rMap.get("user_name");
+                String res_user_email = EncryptUtil.decAES128CBC(rDTO.getUser_email());
+                String res_user_name = rDTO.getUser_name();
 
                 msg = "환영합니다. " + res_user_name + "님";
                 url = "/home";
@@ -283,16 +267,19 @@ public class UserController {
             log.info("user_name : " + user_name);
             log.info("user_pw : " + user_pw);
 
-            Map<String, Object> pMap = new HashMap<>();
-            pMap.put("user_email", user_email);
-            pMap.put("user_name", user_name);
-            pMap.put("user_pw", user_pw);
+            UserInfoDTO pDTO = new UserInfoDTO();
+            pDTO.setUser_email(user_email);
+            pDTO.setUser_name(user_name);
+            pDTO.setUser_pw(user_pw);
 
-            int res = userService.updateUserPw(pMap);
+            int res = userService.updateUserPw(pDTO);
 
             if (res == 1) {
                 msg = "성공적으로 비밀번호를 변경했습니다. 다시 로그인 해주세요";
                 url = "/home";
+                //로그인시 이메일 이름저장
+                session.setAttribute("SS_USER_EMAIL", "");
+                session.setAttribute("SS_USER_NAME","");
             } else {
                 msg = "비밀번호 저장에 실패했습니다.";
                 url = "/updatePwPage";
@@ -316,7 +303,7 @@ public class UserController {
 
     // 새비밀번호 전송
     @PostMapping(value = "findPw")
-    public String findPw(HttpServletRequest request, ModelMap model) throws Exception {
+    public String findPw(HttpServletRequest request, ModelMap model,HttpSession session) throws Exception {
 
         log.info(this.getClass().getName() + ".findPw start!");
 
@@ -336,21 +323,22 @@ public class UserController {
             log.info("user_email : " + user_email);
             log.info("user_name : " + user_name);
 
-            Map<String, Object> pMap = new HashMap<>();
-            pMap.put("user_email", user_email);
-            pMap.put("user_name", user_name);
-            pMap.put("user_pw", user_pw);
+            UserInfoDTO pDTO = new UserInfoDTO();
+            pDTO.setUser_email(user_email);
+            pDTO.setUser_name(user_name);
+            pDTO.setUser_pw(user_pw);
 
-            int res = userService.updateUserPw(pMap);
+
+            int res = userService.updateUserPw(pDTO);
 
             if (res == 1) {
 
-                MailDTO pDTO = new MailDTO();
-                pDTO.setToMail(EncryptUtil.decAES128CBC(user_email));
-                pDTO.setTitle("######의 새비밀번호 전송!!!");
-                pDTO.setContents("새 비밀번호 : " + newPW);
+                MailDTO mDTO = new MailDTO();
+                mDTO.setToMail(EncryptUtil.decAES128CBC(user_email));
+                mDTO.setTitle(" 새비밀번호 전송!!!");
+                mDTO.setContents("changePassword " + newPW);
 
-                int mailRes = mailService.doSendMail(pDTO);
+                int mailRes = mailService.doSendMail(mDTO);
 
                 if (mailRes == 1) {
                     msg = "새 비밀번호를 이메일로 발송했습니다. 로그인 후 변경해주세요.";
@@ -370,6 +358,7 @@ public class UserController {
             log.info(e.toString());
             e.printStackTrace();
         }
+
 
         model.addAttribute("msg", msg);
         model.addAttribute("url", url);
@@ -398,11 +387,14 @@ public class UserController {
             log.info("user_email : " + user_email);
             log.info("user_name : " + user_name);
 
-            Map<String, Object> pMap = new HashMap<>();
-            pMap.put("user_email", user_email);
-            pMap.put("user_name", user_name);
+            UserInfoDTO pDTO = new UserInfoDTO();
+            pDTO.setUser_email(user_email);
+            pDTO.setUser_name(user_name);
 
-            int res = userService.deleteUser(pMap);
+
+            int res = userService.deleteUser(pDTO);
+
+            log.info("res : "+ res);
 
             if (res == 1) {
                 msg = "성공적으로 계정이 삭제 되었습니다.";
@@ -430,58 +422,6 @@ public class UserController {
         return "/redirect";
     }
 
-    //카카오톡 로그인하기
-    @RequestMapping(value = "/login/Kakao", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, String> loginKakao(HttpServletRequest request, HttpSession session) throws Exception {
-
-        log.info(this.getClass().getName() + ".loginKaKao start!");
-
-        Map<String, String> rMap = new HashMap<>();
-
-        try {
-            String user_email = CmmUtil.nvl(request.getParameter("email"));
-            String user_name = CmmUtil.nvl(request.getParameter("username"));
-            String user_id = "notinid";
-
-            ;
-            log.info("user_name : " + user_name);
-
-            rMap = userService.getUserExistForAJAX(EncryptUtil.encAES128CBC(user_email));
-
-            String userExistRes = CmmUtil.nvl(rMap.get("res"), "null");
-            log.info("userExist res : " + userExistRes);
-
-            if (userExistRes.equals("exist")) {
-                session.setAttribute("SS_USER_EMAIL", user_email);
-                session.setAttribute("SS_USER_NAME", user_name);
-                session.setAttribute("SS_USER_TYPE", "KaKao");
-
-
-            } else if (userExistRes.equals("null")) {
-                Map<String, Object> pMap = new HashMap<>();
-                pMap.put("user_email", EncryptUtil.encAES128CBC(user_email));
-                pMap.put("user_name", user_name);
-                pMap.put("user_pw", user_id);
-
-                userService.insertUser(pMap);
-
-                session.setAttribute("SS_USER_EMAIL", user_email);
-                session.setAttribute("SS_USER_NAME", user_name);
-                session.setAttribute("SS_USER_TYPE", "KaKao");
-            }
-
-        } catch (Exception e) {
-            rMap.put("res", "exception");
-            log.info(e.toString());
-            e.printStackTrace();
-        }
-
-
-        log.info(this.getClass().getName() + ".loginKaKAo end!");
-
-        return rMap;
-    }
 
 
 }

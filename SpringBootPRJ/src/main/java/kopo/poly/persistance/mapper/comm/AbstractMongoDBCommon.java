@@ -9,17 +9,38 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @Slf4j
 public abstract class AbstractMongoDBCommon {
 
-    // 로그 파일 생성 및 로그 출력을 위한 log4j 프레임워크의 자바 객체
-
-
     @Autowired
     protected MongoTemplate mongodb;
 
-    protected boolean createCollection(String colNm) throws Exception {
-        return createCollection(colNm, "");
+    /**
+     * 컬렉션 생성
+     *
+     * @param colNm 생성할 컬렉션명
+     * @return 생성결과
+     */
+    protected boolean createCollection(String colNm) {
+
+        boolean res;
+
+        if (mongodb.collectionExists(colNm)){
+            res = false;
+
+        }else{
+            mongodb.createCollection(colNm);
+            res = true;
+        }
+
+        return res;
     }
 
-    protected boolean createCollection(String colNm, String index) throws Exception {
+    /**
+     * 인덱스 컬럼이 한 개일때 컬렉션 생성
+     *
+     * @param colNm 생성할 컬렉션명
+     * @param index 생성할 인덱스
+     * @return 생성결과
+     */
+    protected boolean createCollection(String colNm, String index) {
 
         String[] indexArr = {index};
 
@@ -27,13 +48,13 @@ public abstract class AbstractMongoDBCommon {
     }
 
     /**
-     * 인덱스 컬럼이 여러개일때 컬렉션 생성
+     * 인덱스 컬럼이 여러 개일때 컬렉션 생성
      *
-     * @param colNm 컬렉션명
-     * @param index 인덱스
+     * @param colNm 생성할 컬렉션명
+     * @param index 생성할 인덱스
      * @return 생성결과
      */
-    protected boolean createCollection(String colNm, String[] index) throws Exception {
+    protected boolean createCollection(String colNm, String[] index) {
 
         log.info(this.getClass().getName() + ".createCollection Start!");
 
@@ -65,4 +86,22 @@ public abstract class AbstractMongoDBCommon {
 
     }
 
+    /**
+     * 컬렉션 삭제
+     *
+     * @param colNm 생성할 컬렉션명
+     * @return 삭제결과
+     */
+    protected boolean dropCollection(String colNm) {
+
+        boolean res = false;
+
+        if (mongodb.collectionExists(colNm)){
+            mongodb.dropCollection(colNm);
+            res = true;
+
+        }
+
+        return res;
+    }
 }

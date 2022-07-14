@@ -2,10 +2,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
+<%@ page import="kopo.poly.dto.DicDTO" %>
+<%@ page import="java.util.*" %>
 <%
-    List<Map<String, Object>> rList = (List<Map<String, Object>>) request.getAttribute("Titlelist");
+    List<DicDTO> rList = (List<DicDTO>) request.getAttribute("Titlelist");
+
+    if(rList==null){
+        rList = new ArrayList<>();
+
+    }
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -106,7 +111,7 @@
         <!--검색기능-->
 
         <div class="row my-5">
-            <%for (Map<String, Object> pMap : rList) { %>
+            <%for (DicDTO pDTO : rList) { %>
             <div class="col-lg-4 py-3">
                 <div class="card-blog">
                     <div class="header">
@@ -116,9 +121,9 @@
                     </div>
 
                     <h5 class="post-title"><a
-                            href="/infoPg?DICNM=<%=pMap.get("DICNM")%>">&nbsp&nbsp<%=pMap.get("DICNM")%>
+                            href="/infoPg?DICNM=<%=pDTO.getDicnm()%>">&nbsp&nbsp<%=CmmUtil.nvl(pDTO.getDicnm())%>
                     </a></h5>
-                    <div class="post-date">&nbsp&nbsp&nbsp<%=pMap.get("SORTNM")%>
+                    <div class="post-date">&nbsp&nbsp&nbsp<%=CmmUtil.nvl(pDTO.getSortnm())%>
                     </div>
                     <p></p>
                 </div>

@@ -131,7 +131,8 @@
                 },
                 success: function (json) {
                     let checkRes = json.res;
-                    // console.log(json);
+                    console.log(json);
+                    console.log(checkRes);
 
                     if (checkRes === 'exist') {
                         alert("존재하는 이메일입니다. 다시 시도해주세요")

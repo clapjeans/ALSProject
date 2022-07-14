@@ -1,6 +1,7 @@
 package kopo.poly.controller;
 
 
+import kopo.poly.dto.DicDTO;
 import kopo.poly.service.IDicService;
 import kopo.poly.util.CmmUtil;
 import kopo.poly.util.Pagination;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -32,28 +34,33 @@ public class DicController {
                          HttpServletRequest request, HttpSession session) throws Exception {
         log.info(getClass().getName() + "Start SearchList ");
 
-        //prameter 받은값
-        String SORTNM = CmmUtil.nvl(request.getParameter("SORTNM"));    // 제목
+
+        //prameter 받은값 받아서 넣기
+        String SORTNM = CmmUtil.nvl(request.getParameter("SORTNM"));    // 분류명
         session.setAttribute("SORTNM", SORTNM);                        //제목 세션에 담고 넘겨버림
-        String keyword = CmmUtil.nvl(request.getParameter("keyword")); //키워드 검색
-        String sort = CmmUtil.nvl(request.getParameter("sort")); //구분값 검색
+        log.info("sortnm"+SORTNM);
 
-        log.info(this.getClass().getName() + sort);
 
-        //키워드 검색
-        Map<String, String> pMap = new HashMap<>();
-        pMap.put("keyword", keyword);
-        pMap.put("sort", sort);
+        //제대로 넘어왔는지 확인
+        log.info(this.getClass().getName() + CmmUtil.nvl(request.getParameter("sort")));
+        log.info(this.getClass().getName() + CmmUtil.nvl(request.getParameter("keyword")));
+        String key = CmmUtil.nvl(request.getParameter("keyword"));
+
+        DicDTO pDTO = new DicDTO();
+        pDTO.setKeyword(CmmUtil.nvl(request.getParameter("keyword")));
+        pDTO.setSort(CmmUtil.nvl(request.getParameter("sort")));
 
 
         //게시글 총갯수
         int listCount = 196;
 
-     // if(SORTNM !=null) {
-    //       listCount = dicservice.getListCount(SORTNM);
-    //   }else{
-           listCount =196;
-    //  }
+        if (!SORTNM.equals("")) {
+            listCount = dicservice.getListCount(SORTNM);
+
+        } else if(!key.equals("")){
+
+            listCount = dicservice.getKeyCount(pDTO);
+        }
 
         log.info("게시글총갯수확인" + listCount);
 
@@ -62,7 +69,7 @@ public class DicController {
 
 
         //게시글 목록
-        List<Map<String, Object>> Titlelist = dicservice.getList(paging, SORTNM, pMap);
+        List<DicDTO> Titlelist = dicservice.getList(paging, SORTNM, pDTO);
 
         //JSP로 전송하기
         model.addAttribute("Titlelist", Titlelist);
@@ -75,7 +82,7 @@ public class DicController {
 
     //상세페이지
     @GetMapping(value = "infoPg")
-    public String infoPg(HttpServletRequest request, Model model) {
+    public String infoPg(HttpServletRequest request, Model model) throws Exception{
         log.info(getClass().getName() + "Start info ");
 
         //url로 값 받아옴 
@@ -84,7 +91,7 @@ public class DicController {
         log.info("dicnm :" + dicnm);
 
         //dicnm을 기준으로 설명문 담아오기
-        List<Map<String, String>> InfoList = dicservice.getInfolist(dicnm);
+        List<DicDTO> InfoList = dicservice.getInfolist(dicnm);
 
 
         //JSP전송 
@@ -95,4 +102,14 @@ public class DicController {
         return "/search/infoPg";
     }
 
+    @GetMapping(value = "/getCout")
+    @ResponseBody
+    public int count() throws Exception {
+
+        String SORTNM = "가연성";
+
+        int count = dicservice.getListCount(SORTNM);
+
+        return count;
+    }
 }

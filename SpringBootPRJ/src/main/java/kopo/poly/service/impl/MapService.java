@@ -1,5 +1,7 @@
 package kopo.poly.service.impl;
 
+import kopo.poly.dto.MapDTO;
+import kopo.poly.dto.SearchDTO;
 import kopo.poly.persistance.mapper.IDicMapper;
 import kopo.poly.persistance.mapper.IMapMapper;
 import kopo.poly.service.IMapService;
@@ -25,10 +27,10 @@ public class MapService implements IMapService {
 
     //지도 리스트 가져오는법
     @Override
-    public List<Map<String, Object>> getMapList(PageInfo paging, String gu, String dong, Map<String, String> pMap) {
+    public List<MapDTO> getMapList(PageInfo paging, String gu, String dong, SearchDTO sDTO) throws Exception {
         log.info(this.getClass().getName() + ".getNoticList start!");
 
-        List<Map<String,Object>> getMapList = mapMapper.getMapList(paging,gu,dong,pMap);
+        List<MapDTO> getMapList = mapMapper.getMapList(paging,gu,dong,sDTO);
 
 
         if (getMapList == null) {
@@ -40,11 +42,11 @@ public class MapService implements IMapService {
 
 
     @Override
-    public List<Map<String, String>> getMapListInfo(Map<String, String> pMap) {
+    public List<MapDTO> getMapListInfo(MapDTO mDTO ) throws Exception {
 
         log.info(this.getClass().getName()+"location List get ");
 
-        List<Map<String,String>> rList = mapMapper.getMapInfoList(pMap);
+        List<MapDTO> rList = mapMapper.getMapInfoList(mDTO);
 
 
         if (rList == null) {
@@ -55,5 +57,25 @@ public class MapService implements IMapService {
         log.info(this.getClass().getName()+"location List get ");
 
         return  rList;
+    }
+
+    @Override
+    public int getlistCount(SearchDTO sDTO,String gu) throws Exception {
+        log.info(this.getClass().getName() + ".getlistCount Start");
+
+        int listcount = mapMapper.getListCount(sDTO,gu);
+
+        log.info(this.getClass().getName() + "getlistCount End");
+        return listcount;
+    }
+
+    @Override
+    public int getAllListCount() throws Exception {
+        log.info(this.getClass().getName() + ".getAllListCount Start");
+
+        int listcount = mapMapper.getAllListCount();
+
+        log.info(this.getClass().getName() + "getAllListCount End");
+        return listcount;
     }
 }

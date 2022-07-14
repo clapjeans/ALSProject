@@ -3,9 +3,14 @@
          pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="kopo.poly.util.EncryptUtil" %>
+<%@ page import="kopo.poly.dto.MapDTO" %>
+<%@ page import="java.net.URLEncoder" %>
+
 <%
-    List<Map<String, Object>> rList = (List<Map<String, Object>>) request.getAttribute("MapList");
+    List<MapDTO> rList = (List<MapDTO>) request.getAttribute("MapList");
 %>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,69 +27,61 @@
     <link rel="stylesheet" href="./assets/css/theme.css">
     <style>
 
-        table {
-            border-collapse: collapse;
-            border-spacing: 0;
-            margin-top: 20px;
-            margin-bottom: 20px;
-
-        }
-
-
-        .board-table {
-            font-size: 13px;
+        .divTable{
+            border-top: 2px solid #ccc;
+            display: table;
             width: 100%;
-            border-top: 1px solid #ccc;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .board-table a {
-            color: #333;
-            display: inline-block;
-            line-height: 1.4;
-            word-break: break-all;
-            vertical-align: middle;
-        }
-        .board-table a:hover {
-            text-decoration: underline;
-        }
-        .board-table th {
             text-align: center;
         }
+        .divTableRow {
+            display: table-row;
+        }
+        .divTableHeading {
 
-        .board-table .th-num {
-            width: 100px;
-            text-align: center;
+            display: table-header-group;
+        }
+        .divTableCell, .divTableHead {
+            display: table-cell;
+            padding: 10px;
+        }
+        .divTableHeading {
+
+            display: table-header-group;
+            font-weight: bold;
+        }
+        .divTableFoot {
+
+            display: table-footer-group;
+            font-weight: bold;
+        }
+        .divTableBody {
+            display: table-row-group;
+        }
+        .divTableHead{
+            border-bottom: 2px solid #e7e7e7;
+
+        }
+        .divTableCell{
+            border-bottom: 1px solid #e7e7e7;
         }
 
-        .board-table .th-date {
-            width: 200px;
+        .tablemargin{
+            margin-top: 20px;
+            margin-bottom: 50px;
         }
+   </style>
 
-        .board-table th, .board-table td {
-            padding: 14px 0;
+    <script type="text/javascript">
+
+        function gourl(guplace,gu_name) {
+            console.log("guplace : " + guplace);
+            console.log("guPlace : " + encodeURI(guplace, "UTF-8"));
+            //location.href = “test.jsp?name=” + encodeURI(“한글나라”, “UTF-8″);
+            location.href = "/mapInfo?GU_PLACE=" + encodeURI(guplace, "UTF-8") + "&GU_NAME=" + encodeURI(gu_name, "UTF-8");
         }
-
-        .board-table tbody td {
-            border-top: 1px solid #e7e7e7;
-            text-align: center;
-        }
-
-        .board-table tbody th {
-            padding-left: 28px;
-            padding-right: 14px;
-            border-top: 1px solid #e7e7e7;
-            text-align: left;
-        }
-
-        .board-table tbody th p{
-            display: none;
-        }
+    </script>
 
 
-
-
-    </style>
 </head>
 <body>
 
@@ -100,7 +97,7 @@
                 <div class="col-md-6">
                     <nav aria-label="Breadcrumb">
                         <ul class="breadcrumb justify-content-center py-0 bg-transparent">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item">Home</li>
                             <li class="breadcrumb-item active">Blog</li>
                         </ul>
                     </nav>
@@ -136,31 +133,28 @@
             </div>
         </div>
 
-        <div >
-            <table class="board-table">
-                <thead>
-                <tr>
-                    <th scope="col" class="th-num">지역구명</th>
-                    <th scope="col" class="th-title">관리구역명</th>
-                    <th scope="col" class="th-date">등록일</th>
-                </tr>
-                </thead>
-                <tbody>
-                <%for (Map<String, Object> pMap : rList) { %>
-                <tr>
-                    <td><%=pMap.get("GU_NAME")%></td>
-                    <th>
-                        <a href="/mapInfo?GU_PLACE=<%=pMap.get("GU_PLACE")%>&GU_NAME=<%=pMap.get("GU_NAME")%>"><%=pMap.get("GU_PLACE")%></a>
-                    </th>
-                    <td><%=pMap.get("DATE")%></td>
-                </tr>
+        <div class="tablemargin">
+            <div class="divTable">
+                <div class="divTableHeading">
+                    <div class="divTableRow">
+                        <div class="divTableHead">지역구명</div>
+                        <div class="divTableHead">관리구역명</div>
+                        <div class="divTableHead">등록일</div>
+                    </div>
+                </div>
+                <%for ( MapDTO mDTO : rList) { %>
+                <div class="divTableBody">
+                    <div class="divTableRow">
+                        <div class="divTableCell"><%=mDTO.getGu_name()%></div>
+                        <div class="divTableCell" style="width: 50%;"><a href="/mapInfo?GU_PLACE=<%=mDTO.getGu_place()%>&GU_NAME=<%=mDTO.getGu_name()%>"><%=mDTO.getGu_place()%></a></div>
+                        <div class="divTableCell"><%=mDTO.getDate()%></div>
+                    </div>
+                </div>
                 <% } %>
+            </div> <!--divtable 시작-->
+        </div> <!--그냥 div-->
 
-                </tbody>
-            </table>
-        </div>
-
-    </div>
+    </div> <!--container-->
 
     <!-- 페이징 처리 -->
     <nav aria-label="Page navigation example">
@@ -216,10 +210,8 @@
         </ul>
     </nav>
 
-    <!---pagenation-->
 
-</div>
-</div>
+</div><!---pagenation-->
 <%@include file="../../views/inc/footbar.jsp"%>
 
 <script src="./assets/js/jquery-3.5.1.min.js"></script>

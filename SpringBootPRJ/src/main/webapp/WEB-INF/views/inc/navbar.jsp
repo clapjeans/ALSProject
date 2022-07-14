@@ -42,23 +42,29 @@
 
         <div class="navbar-collapse collapse" id="navbarContent">
             <ul class="navbar-nav ml-auto" >
-                <li class="nav-item" >
-                    <a class="nav-link" href="/home" onclick="deletSort()">Home</a>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/voice" onclick="deletSort()">voice</a>
                 </li>
+
                 <li class="nav-item" onclick="deletSort();renameClass()">
                     <a class="nav-link" href="/picSearch" onclick="deletSort()">Image</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/search" onclick="deletSort()">Method</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/mapSearch" onclick="deletSort()">location</a>
                 </li>
-
+                <li class="nav-item" >
+                    <a class="nav-link" href="/boardList" onclick="deletSort()">RecMarket</a>
+                </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" onclick="deletUser()">Sign-out</a>
+                    <a class="nav-link" href="/myPage" onclick="deletSort()">Mypage</a>
                 </li>
+
                 <% if (user_email.equals("")) { %>
                 <li class="nav-item">
                     <a class="btn btn-primary ml-lg-2" href="/loginPage">Login</a>

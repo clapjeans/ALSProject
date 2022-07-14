@@ -1,8 +1,12 @@
 package kopo.poly.persistance.mapper.mongo;
 
 
-
+import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import kopo.poly.dto.DicDTO;
+import kopo.poly.dto.MapDTO;
+import kopo.poly.dto.SearchDTO;
 import kopo.poly.persistance.mapper.IMapMapper;
 import kopo.poly.persistance.mapper.comm.AbstractMongoDBCommon;
 import kopo.poly.util.CmmUtil;
@@ -10,14 +14,12 @@ import kopo.poly.vo.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.BsonRegularExpression;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 @Slf4j
@@ -34,14 +36,14 @@ public class MapMapper extends AbstractMongoDBCommon implements IMapMapper {
 
 
     @Override //컬럼명 , 페이지,가연성분류,검색키워드
-    public List<Map<String, Object>> getMapList(PageInfo paging, String gu, String dong, Map<String, String> pMap) {
-       //사용할 컬렌션
+    public List<MapDTO> getMapList(PageInfo paging, String gu, String dong, SearchDTO sDTO) {
+        //사용할 컬렌션
 
 
         // 컬렉션으로부터 전체 데이터 가져온 것을 List 형태로 저장하기 위한 변수 선언
-        List<Map<String, Object>> rList = new ArrayList<>();
+        List<MapDTO> rList = new ArrayList<>();
 
-        MongoCollection<Document> collection = mongodb.getCollection(colNm);
+        MongoCollection<Document> col = mongodb.getCollection(colNm);
 
         // Created with Studio 3T, the IDE for MongoDB - https://studio3t.com/
 
@@ -52,13 +54,13 @@ public class MapMapper extends AbstractMongoDBCommon implements IMapMapper {
 
         Document query = new Document();
         if (gu != "") {
-            query.append("GU_NAME",gu);
+            query.append("GU_NAME", gu);
         }
         if (dong != "") {
-            query.append("GU_PLACE",new BsonRegularExpression("^.*" + dong+ ".*$", "i"));
+            query.append("GU_PLACE", new BsonRegularExpression("^.*" + dong + ".*$", "i"));
         }
-        if (!pMap.get("keyword").equals("") ) {
-            query.append(pMap.get("category"), new BsonRegularExpression("^.*" + pMap.get("keyword") + ".*$", "i"));
+        if (!sDTO.getCategory().equals("")) {
+            query.append(sDTO.getCategory(), new BsonRegularExpression("^.*" + sDTO.getKeyword() + ".*$", "i"));
         }
 
 
@@ -68,100 +70,231 @@ public class MapMapper extends AbstractMongoDBCommon implements IMapMapper {
         projection.append("DATE", "$DATE");
         projection.append("_id", 0);
 
-        Consumer<Document> processBlock = document -> {
-            String GU_NAME = CmmUtil.nvl(document.getString("GU_NAME"));
-            String GU_PLACE = CmmUtil.nvl(document.getString("GU_PLACE"));
-            String DATE = CmmUtil.nvl(document.getString("DATE"));
+        FindIterable<Document> rs = col.find(query).skip(skipSize).limit(limitSize).projection(projection);
+
+        for (Document doc : rs) {
+            if (doc == null) {
+                doc = new Document();
+            }
+            String GU_NAME = CmmUtil.nvl(doc.getString("GU_NAME"));
+            String GU_PLACE = CmmUtil.nvl(doc.getString("GU_PLACE"));
+            String DATE = CmmUtil.nvl(doc.getString("DATE"));
             //제대로 출력되는지 확인
             log.info(this.getClass().getName() + GU_NAME);
-            Map<String, Object> rMap = new LinkedHashMap<>();
+            log.info(this.getClass().getName() + GU_PLACE);
+            log.info(this.getClass().getName() + DATE);
 
-            rMap.put("GU_NAME", GU_NAME);
-            rMap.put("GU_PLACE", GU_PLACE);
-            rMap.put("DATE", DATE);
-            rList.add(rMap);
 
-        };
+            MapDTO mDTO = new MapDTO();
+            mDTO.setGu_name(GU_NAME);
+            mDTO.setGu_place(GU_PLACE);
+            mDTO.setDate(DATE);
 
+
+            //레코드 결과를 list에 저장하기
+            rList.add(mDTO);
+
+        }
         log.info(this.getClass().getName() + "mongolist mapper ?");
-
-        collection.find(query).skip(skipSize).limit(limitSize).projection(projection).forEach(processBlock);
-
 
         return rList;
     }
 
-@Override //재활용방법 가져오기
-public List<Map<String, String>> getMapInfoList(Map<String, String> pMap) {
-    // 컬렉션으로부터 전체 데이터 가져온 것을 List 형태로 저장하기 위한 변수 선언
-    List<Map<String, String>> rList = new ArrayList<>();
-
-    MongoCollection<Document> collection = mongodb.getCollection(colNm);
-
-    Document query = new Document();
-    query.append("GU_PLACE",pMap.get("GU_PLACE"));
-    query.append("GU_NAME",pMap.get("GU_NAME"));
+    @Override //재활용방법 가져오기
+    public List<MapDTO> getMapInfoList(MapDTO mDTO) {
 
 
-    Consumer<Document> processBlock = document -> {
-        String GU_NUM = CmmUtil.nvl(document.getString("GU_NUM"));
-        String GU_NAME = CmmUtil.nvl(document.getString("GU_NAME"));
-        String GU_PLACE = CmmUtil.nvl(document.getString("GU_PLACE"));
-        String PLACE_TY = CmmUtil.nvl(document.getString("PLACE_TY"));
-        String PLACE = CmmUtil.nvl(document.getString("PLACE"));
-        String LIFE_WAY = CmmUtil.nvl(document.getString("LIFE_WAY"));
-        String FOOD_WAY = CmmUtil.nvl(document.getString("FOOD_WAY"));
-        String REC_WAY = CmmUtil.nvl(document.getString("REC_WAY"));
-        String LIFE_DY = CmmUtil.nvl(document.getString("LIFE_DY"));
-        String FOOD_DY = CmmUtil.nvl(document.getString("FOOD_DY"));
-        String REC_DY = CmmUtil.nvl(document.getString("REC_DY"));
-        String LIFE_TM1 = CmmUtil.nvl(document.getString("LIFE_TM1"));
-        String LIFE_TM2 = CmmUtil.nvl(document.getString("LIFE_TM2"));
-        String FOOD_TM1 = CmmUtil.nvl(document.getString("FOOD_TM1"));
-        String FOOD_TM2 = CmmUtil.nvl(document.getString("FOOD_TM2"));
-        String REC_TM1 = CmmUtil.nvl(document.getString("REC_TM1"));
-        String REC_TM2 = CmmUtil.nvl(document.getString("REC_TM2"));
-        String DAYOFF = CmmUtil.nvl(document.getString("DAYOFF"));
-        String MANAGE = CmmUtil.nvl(document.getString("MANAGE"));
-        String DATE = CmmUtil.nvl(document.getString("DATE"));
-        String PHONM = CmmUtil.nvl(document.getString("PHONM"));
+        log.info(this.getClass().getName() + "getMapList info start");
+        // 컬렉션으로부터 전체 데이터 가져온 것을 List 형태로 저장하기 위한 변수 선언
 
-        //제대로 출력되는지 확인
-        log.info(this.getClass().getName() + GU_NAME);
+        List<MapDTO> rList = new ArrayList<>();
 
-        Map<String, String> rMap = new LinkedHashMap<>();
-        rMap.put("GU_NUM", GU_NUM);
-        rMap.put("GU_NAME", GU_NAME);
-        rMap.put("GU_PLACE", GU_PLACE);
-        rMap.put("PLACE_TY", PLACE_TY);
-        rMap.put("PLACE", PLACE);
-        rMap.put("LIFE_WAY", LIFE_WAY);
-        rMap.put("FOOD_WAY", FOOD_WAY);
-        rMap.put("REC_WAY", REC_WAY);
-        rMap.put("LIFE_DY", LIFE_DY);
-        rMap.put("FOOD_DY", FOOD_DY);
-        rMap.put("REC_DY", REC_DY);
-        rMap.put("LIFE_TM1", LIFE_TM1);
-        rMap.put("LIFE_TM2", LIFE_TM2);
-        rMap.put("FOOD_TM1", FOOD_TM1);
-        rMap.put("FOOD_TM2", FOOD_TM2);
-        rMap.put("REC_TM1", REC_TM1);
-        rMap.put("REC_TM2", REC_TM2);
-        rMap.put("DAYOFF", DAYOFF);
-        rMap.put("MANAGE", MANAGE);
-        rMap.put("DATE", DATE);
-        rMap.put("PHONM", PHONM);
+        MongoCollection<Document> col = mongodb.getCollection(colNm);
 
-        rList.add(rMap);
-
-    };
-
-    log.info(this.getClass().getName() + "mongolist mapper ?");
-
-    collection.find(query).forEach(processBlock);
+        Document query = new Document();
+        query.append("GU_PLACE", mDTO.getGu_place());
+        query.append("GU_NAME", mDTO.getGu_name());
 
 
-    return rList;
-}
+        FindIterable<Document> rs = col.find(query);
 
+        for (Document doc : rs) {
+            if (doc == null) {
+                doc = new Document();
+            }
+            String GU_NUM = CmmUtil.nvl(doc.getString("GU_NUM"));
+            String GU_NAME = CmmUtil.nvl(doc.getString("GU_NAME"));
+            String GU_PLACE = CmmUtil.nvl(doc.getString("GU_PLACE"));
+            String PLACE_TY = CmmUtil.nvl(doc.getString("PLACE_TY"));
+            String PLACE = CmmUtil.nvl(doc.getString("PLACE"));
+            String LIFE_WAY = CmmUtil.nvl(doc.getString("LIFE_WAY"));
+            String FOOD_WAY = CmmUtil.nvl(doc.getString("FOOD_WAY"));
+            String REC_WAY = CmmUtil.nvl(doc.getString("REC_WAY"));
+            String LIFE_DY = CmmUtil.nvl(doc.getString("LIFE_DY"));
+            String FOOD_DY = CmmUtil.nvl(doc.getString("FOOD_DY"));
+            String REC_DY = CmmUtil.nvl(doc.getString("REC_DY"));
+            String LIFE_TM1 = CmmUtil.nvl(doc.getString("LIFE_TM1"));
+            String LIFE_TM2 = CmmUtil.nvl(doc.getString("LIFE_TM2"));
+            String FOOD_TM1 = CmmUtil.nvl(doc.getString("FOOD_TM1"));
+            String FOOD_TM2 = CmmUtil.nvl(doc.getString("FOOD_TM2"));
+            String REC_TM1 = CmmUtil.nvl(doc.getString("REC_TM1"));
+            String REC_TM2 = CmmUtil.nvl(doc.getString("REC_TM2"));
+            String DAYOFF = CmmUtil.nvl(doc.getString("DAYOFF"));
+            String MANAGE = CmmUtil.nvl(doc.getString("MANAGE"));
+            String DATE = CmmUtil.nvl(doc.getString("DATE"));
+            String PHONM = CmmUtil.nvl(doc.getString("PHONM"));
+            //제대로 출력되는지 확인
+            log.info(this.getClass().getName() + GU_NAME);
+            log.info(this.getClass().getName() + GU_PLACE);
+            log.info(this.getClass().getName() + DATE);
+
+
+            MapDTO rDTO = new MapDTO();
+            rDTO.setGu_name(GU_NAME);
+            rDTO.setGu_place(GU_PLACE);
+            rDTO.setGu_num(GU_NUM);
+            rDTO.setPlace_ty(PLACE_TY);
+            rDTO.setLife_way(LIFE_WAY);
+            rDTO.setFood_way(FOOD_WAY);
+            rDTO.setRec_way(REC_WAY);
+            rDTO.setLife_dy(LIFE_DY);
+            rDTO.setFood_dy(FOOD_DY);
+            rDTO.setRec_dy(REC_DY);
+            rDTO.setLife_tm1(LIFE_TM1);
+            rDTO.setLife_tm2(LIFE_TM2);
+            rDTO.setFood_tm1(FOOD_TM1);
+            rDTO.setFood_tm2(FOOD_TM2);
+            rDTO.setRec_tm1(REC_TM1);
+            rDTO.setRec_tm2(REC_TM2);
+            rDTO.setDayoff(DAYOFF);
+            rDTO.setManage(MANAGE);
+            rDTO.setDate(DATE);
+            rDTO.setPhone(PHONM);
+            rDTO.setPlace(PLACE);
+
+
+            //레코드 결과를 list에 저장하기
+            rList.add(rDTO);
+
+        }
+        log.info(this.getClass().getName() + "getMapInfoList mapper End");
+
+        return rList;
+
+    }
+
+    @Override
+    public int getListCount(SearchDTO sDTO, String gu) throws Exception {
+        log.info(this.getClass().getName() + "getlistCount Start");
+
+        AggregateIterable<Document> rs = null;
+        int count = 0;
+        if (!sDTO.getCategory().equals("")) {
+            List<? extends Bson> pipeline = Arrays.asList(
+                    new Document()
+                            .append("$match", new Document()
+                                    .append(sDTO.getCategory(), new BsonRegularExpression("^.*" + sDTO.getKeyword() + ".*$", "i"))
+                            ),
+                    new Document()
+                            .append("$group", new Document()
+                                    .append("_id", new Document())
+                                    .append("COUNT(" + sDTO.getCategory() + ")", new Document()
+                                            .append("$sum", 1)
+                                    )
+                            ),
+                    new Document()
+                            .append("$project", new Document()
+                                    .append("count", "$COUNT(" + sDTO.getCategory() + ")")
+                                    .append("_id", 0)
+                            )
+            );
+
+
+            MongoCollection<Document> col = mongodb.getCollection(colNm);
+            rs = col.aggregate(pipeline).allowDiskUse(true);
+        } else {
+            List<? extends Bson> pipeline = Arrays.asList(
+                    new Document()
+                            .append("$match", new Document()
+                                    .append("GU_NAME", gu)
+                            ),
+                    new Document()
+                            .append("$group", new Document()
+                                    .append("_id", new Document())
+                                    .append("COUNT(*)", new Document()
+                                            .append("$sum", 1)
+                                    )
+                            ),
+                    new Document()
+                            .append("$project", new Document()
+                                    .append("count", "$COUNT(*)")
+                                    .append("_id", 0)
+                            )
+            );
+
+            MongoCollection<Document> col = mongodb.getCollection(colNm);
+            rs = col.aggregate(pipeline).allowDiskUse(true);
+        }
+
+
+        for (Document doc : rs) {
+
+            if (doc == null) {
+                doc = new Document();
+            }
+
+
+            count = doc.getInteger("count", 10);
+
+            log.info("count : " + count);
+        }
+
+
+        log.info(this.getClass().getName() + ". getlistCount end");
+        return count;
+    }
+
+    //페이지 전체 갯수
+    @Override
+    public int getAllListCount() throws Exception {
+        log.info(this.getClass().getName() + "getlistCount Start");
+
+        int count = 0; //페이지 갯수
+
+        List<? extends Bson> pipeline = Arrays.asList(
+                new Document()
+                        .append("$group", new Document()
+                                .append("_id", new Document())
+                                .append("COUNT(*)", new Document()
+                                        .append("$sum", 1)
+                                )
+                        ),
+                new Document()
+                        .append("$project", new Document()
+                                .append("count", "$COUNT(*)")
+                                .append("_id", 0)
+                        )
+        );
+
+
+        MongoCollection<Document> col = mongodb.getCollection(colNm);
+        AggregateIterable<Document> rs = col.aggregate(pipeline).allowDiskUse(true);
+
+        for (Document doc : rs) {
+
+            if (doc == null) {
+                doc = new Document();
+            }
+
+
+            count = doc.getInteger("count", 10);
+
+            log.info("count : " + count);
+        }
+
+
+        log.info(this.getClass().getName() + ". getlistCount end");
+        return count;
+
+    }
 }

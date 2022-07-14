@@ -3,15 +3,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="kopo.poly.dto.DicDTO" %>
 <%
-    List<Map<String, String>> rList = (List<Map<String, String>>) request.getAttribute("InfoList");
+    List<DicDTO> rList = (List<DicDTO>) request.getAttribute("InfoList");
+
 %>
 
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>SeoGram - SEO Agency Template</title>
-
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <link rel="stylesheet" href="./assets/css/maicons.css">
 
     <link rel="stylesheet" href="./assets/css/bootstrap.css">
@@ -19,6 +21,7 @@
     <link rel="stylesheet" href="./assets/vendor/animate/animate.css">
 
     <link rel="stylesheet" href="./assets/css/theme.css">
+
 
     <style>
         .box{
@@ -108,20 +111,20 @@
 <div class="page-section">
 
     <div class="container">
-        <%for (Map<String, String> pMap : rList) { %>
+        <%for (DicDTO pDTO: rList) { %>
         <div class="box icon">
             <div class="box_wrap">
 
-                <div class="box_title"><%=pMap.get("DICNM")%></div>
-               <p > <%=pMap.get("SORTNM")%>분리수거 방법 아래와같이 해주시면됩니다.</p>
+                <div class="box_title"><%=CmmUtil.nvl(pDTO.getDicnm())%></div>
+               <p > <%=CmmUtil.nvl(pDTO.getSortnm())%>분리수거 방법 아래와같이 해주시면됩니다.</p>
             </div>
         </div>
 
-        <h2 class="title-section" style="margin-top: 50px;"><%=pMap.get("DICNM")%>
+        <h2 class="title-section" style="margin-top: 50px;"><%=CmmUtil.nvl(pDTO.getDicnm())%>
         </h2>
         <div class="divider"></div>
         <ul class="bu">
-            <li><%=pMap.get("EXP")%>
+            <li><%=CmmUtil.nvl(pDTO.getExp())%>
             </li>
 
         </ul>
@@ -129,22 +132,25 @@
 
         <h2 class="title-section" style="margin-top: 50px;">배출 방법</h2>
         <div class="divider"></div>
-        <ul class="bu">
-            <li><%=pMap.get("METHOD")%></li>
+        <ul class="bu" >
+            <li ><%=CmmUtil.nvl(pDTO.getMethod())%></li>
         </ul>
 
 
         <h2 class="title-section" style="margin-top: 50px;"> 주의사항</h2>
         <div class="divider"></div>
-        <% if(pMap.get("CARE")!=""){ %>
+        <% if(!CmmUtil.nvl(pDTO.getCare()).equals("")){ %>
         <ul class="bu">
-            <li><%=pMap.get("CARE")%>
+            <li><%=CmmUtil.nvl(pDTO.getCare())%>
             </li>
         </ul>
         <%}%>
+        <input type="hidden" value="<%=pDTO.getDicnm()%>" id="dicnm">
+        <input type="hidden" value="<%=pDTO.getMethod()%>" id="method">
         <% } %>
-    </div>
 
+        <button class="btn btn-secondary"  style="float: right" id="create-kakaotalk-sharing-btn">공유하기</button>
+    </div>
 
 </div> <!-- .container -->
 
@@ -160,6 +166,45 @@
 <script src="./assets/vendor/wow/wow.min.js"></script>
 
 <script src="./assets/js/theme.js"></script>
+<script type='text/javascript'>
+
+    var link = document.location.href;
+    var method = document.getElementById('method').value;
+    var DicName = document.getElementById('dicnm').value;
+    console.log(method);
+    console.log(DicName);
+
+    Kakao.init('7a41e2e2fe078d964dd06a6ada8cd641');
+
+    Kakao.Link.createDefaultButton({
+        container: '#create-kakaotalk-sharing-btn',
+        objectType: 'feed',
+        content: {
+            title: DicName,
+            description: method,
+            imageUrl:
+                'https://post-phinf.pstatic.net/MjAyMDA0MDhfMjA5/MDAxNTg2MzA4NzE2MDk4.o-6qInDi3g5CTRDPTQYyI8QZxbqVavoIFPn4-GYpZ8Ig.Nokb0Oe4p8A_iD2dcatNBzrqqDZiGEwN8v21FeGE04Eg.PNG/IDlcv2ZQl7nYgJtZSRAftgrWLspo.jpg?type=w400',
+            link: {
+                mobileWebUrl: link,
+                webUrl: link,
+            },
+        },
+
+        buttons: [
+            {
+                title: '자세히 보기',
+                link: {
+                    mobileWebUrl: link,
+                    webUrl: link,
+                },
+            },
+
+        ],
+    })
+
+</script>
 
 </body>
+
+
 </html>
